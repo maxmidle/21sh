@@ -58,13 +58,33 @@ char	**split_line(char *str)
 		while (str[end] && ft_issep(str[end]))
 			end++;
 		start = end;
-		while (str[end] && !ft_issep(str[end]))
+		while (str[end] && !ft_issep(str[end]) &&
+			!ft_ischarsep(str[end]))
 			end++;
 		command[i] = ft_strsub(str, start, end - start);
+		if (str[end] && !command[i])
+			end += fill_sep_line(&str[end], &command[i]);
 		i++;
 	}
 	command[i] = NULL;
 	return (command);
+}
+
+int		fill_sep_line(char *str, char **command)
+{
+	if (!ft_strncmp(str, ">>", 1))
+		*command = ft_strdup(">>");
+	else if (!ft_strncmp(str, ">", 1))
+		*command = ft_strdup(">");
+	else if (!ft_strncmp(str, "<<", 1))
+		*command = ft_strdup("<<");
+	else if (!ft_strncmp(str, "<", 1))
+		*command = ft_strdup("<");
+	else if (!ft_strncmp(str, "|", 1))
+		*command = ft_strdup("|");
+	else if (!ft_strncmp(str, ";", 1))
+		*command = ft_strdup(";");
+	return (ft_strlen(*command));
 }
 
 int		count_words(char *str)
@@ -76,14 +96,21 @@ int		count_words(char *str)
 	wordct = 0;
 	while (str[i])
 	{
-		while (str[i] && !ft_issep(str[i]))
+		while (str[i] && ft_issep(str[i]))
+			i++;
+		if (str[i] && ft_ischarsep(str[i]))
 		{
-			if (!str[i + 1] || ft_issep(str[i + 1]))
-				wordct++;
-			i++;
+			while (str[i] && ft_ischarsep(str[i]))
+				i++;
+			wordct++;
 		}
-		if (str[i])
-			i++;
+		if (str[i] && !ft_issep(str[i]))
+		{	
+			while (str[i] && !ft_issep(str[i]) &&
+				!ft_ischarsep(str[i]))
+				i++;
+			wordct++;
+		}
 	}
 	return (wordct);
 }

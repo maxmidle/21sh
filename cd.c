@@ -67,7 +67,7 @@ char	*getpath(char *command, char *oldpwd, char **envorig)
 
 void	cd_error(int mode, char *command)
 {
-	ft_printf("-minishell: cd: %s: ", command);
+	ft_printf("-21sh: cd: %s: ", command);
 	if (mode == 1)
 		ft_putendl("Permission denied");
 	if (mode == 2)

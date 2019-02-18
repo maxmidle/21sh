@@ -26,7 +26,7 @@ char	**run_cmd(char **command, char **envorig, char **envexec)
 	{
 		if (ft_strcmp(command[i], "exit"))
 		{
-			ft_printf("-minishell: %s:", command[i]);
+			ft_printf("-21sh: %s:", command[i]);
 			ft_putstr(" command not found\n");
 		}
 		else

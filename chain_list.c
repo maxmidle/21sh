@@ -65,3 +65,20 @@ int	init_fdout(char **command)
 	}
 	return (fd_out);
 }
+
+void	free_chain(t_cmd *comd)
+{
+	t_cmd *list;
+
+	list = comd;
+	while (list)
+	{
+		if (comd->cmd)	
+			ft_freetab(comd->cmd);
+		list->prev = NULL;
+		list = list->next;
+		comd->next = NULL;
+		free(comd);
+		comd = list;
+	}
+}	

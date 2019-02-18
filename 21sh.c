@@ -35,6 +35,7 @@ int		main(void)
 		envorig = run_cmd(comd->cmd, envorig, envexec);
 		if (envexec)
 			ft_freetab(envexec);
+		free_chain(comd);
 	}
 	return (0);
 }
@@ -48,7 +49,7 @@ void	ft_prompt(char **envorig)
 	while (envorig[i] && ft_strcmp(envorig[i], "PWD") != 61)
 		i++;
 	if (envorig[i] && (tmp = ft_strrchr(envorig[i], '/') + 1))
-		ft_printf("msh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
+		ft_printf("21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
 	else
-		ft_printf("msh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
+		ft_printf("21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
 }

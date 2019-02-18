@@ -25,7 +25,9 @@
 int		run_bin(char **command, char **envorig, char **envexec);
 char	**read_line(char **environ);
 char	**split_line(char *str);
+int		fill_sep_line(char *str, char **command);
 int		count_words(char *str);
+
 char	*tilde(char *command, char **environ);
 
 char	**env(char **command, char **envorig, char **envexec);
@@ -61,8 +63,10 @@ int	get_next_sep(char **command, int i);
 
 int	ft_iscmdsep(char *cmd);
 int	ft_isredi(char *cmd);
+int	ft_ischarsep(char cmd);
 
 t_cmd	*init_elem(char **command, t_cmd *prev, int *fd);
 char	**init_cmd(char **command);
 int	init_fdout(char **command);
+void	free_chain(t_cmd *comd);
 #endif

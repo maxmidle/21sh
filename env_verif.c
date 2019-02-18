@@ -67,7 +67,7 @@ int	env_error_print(char **cmd, int i, int mode)
 		if (!cmd[i][y])
 			ft_putendl("env : any options specified");
 		else if (cmd[i][y] == 'u')
-			ft_putendl("env : option requires an argument -- u");
+			write(2, "env : option requires an argument -- u\n", 39);
 		else
 			ft_printf("env: illegal option -- %c\n", cmd[i][y]);
 		ft_putendl("usage: env [-i] [-u name] [name=value]");

@@ -23,11 +23,16 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	i = 0;
 	if (n == 0)
 		return (0);
-	while (*ps1 == *ps2 && i < n - 1 && s1[i])
+	while (ps1 && ps2 && i < n)
 	{
+		if (*ps1 != *ps2)
+			return (*ps1 - *ps2);
+			
 		i++;
 		ps1++;
 		ps2++;
 	}
+	if (i >= n)
+		return (0);
 	return (*ps1 - *ps2);
 }
