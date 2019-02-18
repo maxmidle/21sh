@@ -32,7 +32,8 @@ int		main(void)
 			if (env_verif(comd->cmd, 1) != -1)
 				envexec = env(comd->cmd, envorig, envexec);
 		}
-		envorig = run_cmd(comd->cmd, envorig, envexec);
+		if (comd)
+			envorig = run_cmd(comd->cmd, envorig, envexec);
 		if (envexec)
 			ft_freetab(envexec);
 		free_chain(comd);
