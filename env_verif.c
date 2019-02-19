@@ -64,13 +64,17 @@ int	env_error_print(char **cmd, int i, int mode)
 	y = env_param_error(cmd, i);
 	if (mode)
 	{
+		write(2, "env: ", 5);
 		if (!cmd[i][y])
-			ft_putendl("env : any options specified");
+			write(2, "any options specified", 21);
 		else if (cmd[i][y] == 'u')
-			write(2, "env : option requires an argument -- u\n", 39);
+			write(2, "option requires an argument -- u", 32);
 		else
-			ft_printf("env: illegal option -- %c\n", cmd[i][y]);
-		ft_putendl("usage: env [-i] [-u name] [name=value]");
+		{
+			write(2, "illegal option -- ", 18);
+			write(2, &cmd[i][y], 1);
+		}
+		write(2, "\nusage: env [-i] [-u name] [name=value]\n", 40);
 	}
 	return (-1);
 }

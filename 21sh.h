@@ -67,6 +67,6 @@ int	ft_ischarsep(char cmd);
 
 t_cmd	*init_elem(char **command, t_cmd *prev, int *fd);
 char	**init_cmd(char **command);
-int	init_fdout(char **command);
+int	init_fddos(char **command);
 void	free_chain(t_cmd *comd);
 #endif

@@ -18,13 +18,13 @@ int	main(int ac, char **av)
 	{
 		dup2(fd, 2);
 		dup2(fd, 1);
-		printf("si je suis pas dans un fichier c'est relou\n");
+		write(1, "si je suis pas dans un fichier c'est relou\n", 43);
 		write(2, "test\n", 5);
-		write(2, "test2\n", 5);
-		write(2, "test3\n", 5);
-		write(2, "test4\n", 5);
-		write(2, "test5\n", 5);
-		printf("et ca ?\n");
+		write(2, "test2\n", 6);
+		write(2, "test3\n", 6);
+		write(2, "test4\n", 6);
+		write(2, "test5\n", 6);
+		write(1, "et ca ?\n", 8);
 		return (0);
 	}
 	else

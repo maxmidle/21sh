@@ -26,8 +26,9 @@ char	**run_cmd(char **command, char **envorig, char **envexec)
 	{
 		if (ft_strcmp(command[i], "exit"))
 		{
-			ft_printf("-21sh: %s:", command[i]);
-			ft_putstr(" command not found\n");
+			write(2, "-21sh: ", 7);
+			write(2, command[i], ft_strlen(command[i]));
+			write(2, ": command not found \n", 21);
 		}
 		else
 		{
@@ -47,7 +48,7 @@ char	**run_builtins(char **command, char **envorig)
 	else if (!ft_strcmp(command[0], "setenv"))
 	{
 		if (!command[1] || !ft_strchr(command[1], '='))
-			ft_putendl("usage: setenv [VAR=value]");
+			write(2, "usage: setenv [VAR=value]\n", 26);
 		else
 			envorig = ft_setenv(envorig, command[1]);
 	}
@@ -56,7 +57,7 @@ char	**run_builtins(char **command, char **envorig)
 		if (command[1])
 			envorig = ft_unsetenv(envorig, command[1]);
 		else
-			ft_putendl("usage: unsetenv [VAR]");
+			write(2, "usage: unsetenv [VAR]\n", 22);
 	}
 	return (envorig);
 }

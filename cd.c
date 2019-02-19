@@ -67,13 +67,14 @@ char	*getpath(char *command, char *oldpwd, char **envorig)
 
 void	cd_error(int mode, char *command)
 {
-	ft_printf("-21sh: cd: %s: ", command);
+	write(2, "-21sh: cd: ", 11);
+	write(2, command, ft_strlen(command));
 	if (mode == 1)
-		ft_putendl("Permission denied");
+		write(2, ": Permission denied\n", 20);
 	if (mode == 2)
-		ft_putendl("Not a directory");
+		write(2, ": Not a directory\n", 18);
 	if (mode == 3)
-		ft_putendl("No such file or directory");
+		write(2, ": No such file or directory\n", 28);
 }
 
 void	change_pwd(char **envorig, char *oldpwd)

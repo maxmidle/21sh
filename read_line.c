@@ -72,11 +72,11 @@ char	**split_line(char *str)
 
 int		fill_sep_line(char *str, char **command)
 {
-	if (!ft_strncmp(str, ">>", 1))
+	if (!ft_strncmp(str, ">>", 2))
 		*command = ft_strdup(">>");
 	else if (!ft_strncmp(str, ">", 1))
 		*command = ft_strdup(">");
-	else if (!ft_strncmp(str, "<<", 1))
+	else if (!ft_strncmp(str, "<<", 2))
 		*command = ft_strdup("<<");
 	else if (!ft_strncmp(str, "<", 1))
 		*command = ft_strdup("<");

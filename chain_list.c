@@ -1,7 +1,6 @@
 #include "21sh.h"
 
-
-t_cmd	*init_elem(char **command, t_cmd *prev, int *fd)
+t_cmd	*init_elem(char **command, t_cmd *previous, int *fd)
 {
 	int	i;
 	t_cmd	*elem;
@@ -11,17 +10,19 @@ t_cmd	*init_elem(char **command, t_cmd *prev, int *fd)
 	if (!(elem = malloc(sizeof(t_cmd))))
 		return (NULL);
 	elem->cmd = init_cmd(command);
-	elem->fd_out = init_fdout(command);
+	elem->fd_in = 0;
+	elem->fd_out = 1;
 	elem->fd_err = 2;
-	if (fd && fd[0] != -1 && prev)
+	elem->fd_dos = init_fddos(command);
+	if (fd && fd[0] != -1 && previous)
 	{
-		prev->fd_out = fd[1];
-		elem->pipe = fd[0];
+		previous->fd_out = fd[1];
+		elem->fd_in = fd[0];
 	}
-	else
-		elem->pipe = -1;
+	if (elem->fd_dos != -1 && elem->fd_out == 1)
+		elem->fd_out = elem->fd_dos;
 	elem->next = NULL;
-	elem->prev = prev;
+	elem->prev = previous;
 	return (elem);
 }
 
@@ -48,22 +49,22 @@ char	**init_cmd(char **command)
 	return (cmd);
 }
 
-int	init_fdout(char **command)
+int	init_fddos(char **command)
 {
 	int	i;
-	int	fd_out;
+	int	fd_dos;
 
 	i = 0;
-	fd_out = 1;
+	fd_dos = -1;
 	while (command[i] && !ft_iscmdsep(command[i]) && !ft_isredi(command[i]))
 		i++;
 	if (command[i] && ft_isredi(command[i]))
 	{
 		while (command[i + 2] && ft_isredi(command[i + 2]))
 			i = i + 2;
-		fd_out = open(command[i + 1], O_WRONLY);
+		fd_dos = open(command[i + 1], O_WRONLY);
 	}
-	return (fd_out);
+	return (fd_dos);
 }
 
 void	free_chain(t_cmd *comd)
@@ -73,8 +74,17 @@ void	free_chain(t_cmd *comd)
 	list = comd;
 	while (list)
 	{
-		if (comd->cmd)	
-			ft_freetab(comd->cmd);
+	printf("cmd : %s\nin : %d\nout : %d\nerr : %d\ndos : %d\n", list->cmd[0], list->fd_in, list->fd_out, list->fd_err, list->fd_dos);
+		if (list->cmd)	
+			ft_freetab(list->cmd);
+		if (list->fd_in != 0)
+			close(list->fd_in);
+		if (list->fd_out != 1)
+			close(list->fd_out);
+		if (list->fd_err != 2)
+			close(list->fd_err);
+		if (list->fd_dos != -1)
+			close(list->fd_dos);
 		list->prev = NULL;
 		list = list->next;
 		comd->next = NULL;
