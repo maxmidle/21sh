@@ -22,7 +22,7 @@
 # include "libft/ft_printf.h"
 # include "21sh_struct.h"
 
-int		run_bin(char **command, char **envorig, char **envexec);
+int		run_bin(char **command, char **envexec);
 char	**read_line(char **environ);
 char	**split_line(char *str);
 int		fill_sep_line(char *str, char **command);
@@ -53,20 +53,31 @@ char	**dollar(char **command, char **environ);
 char	*dollar_verif(char *command, char **environ);
 char	*dollar_fill(char *command, char *environ);
 
-char	**run_cmd(char **command, char **envorig, char **envexec);
+char	**run_cmd(t_cmd *comd, char **envorig);
 char	**run_builtins(char **command, char **envorig);
+char	**exit_runcmd(char **envorig, char **envexec, int mode);
 int		ft_isbuiltins(char *command);
 
 t_cmd	*handle_line(char **command);
-t_cmd	*add_elem(char **command, t_cmd *list, int *fd);
+t_cmd	*make_list(char **command, t_cmd *list, int ispipe);
 int	get_next_sep(char **command, int i);
+
+int	handle_file(t_cmd *comd, char **envorig);
+void	create_file(t_cmd *comd, char **envorig);
 
 int	ft_iscmdsep(char *cmd);
 int	ft_isredi(char *cmd);
 int	ft_ischarsep(char cmd);
 
-t_cmd	*init_elem(char **command, t_cmd *prev, int *fd);
+t_cmd	*init_elem(char **command, t_cmd *prev, int ispipe);
 char	**init_cmd(char **command);
-int	init_fddos(char **command);
+char	**init_fout(char **command);
+char	*init_fin(char **command);
 void	free_chain(t_cmd *comd);
+
+char	**run_full_cmd(t_cmd *comd, char **envorig);
+void	run_proc(t_cmd *comd, char **envorig);
+void	run_proc_cmd(t_cmd *comd, char **envorig);
+void	ft_dupfd(t_cmd *comd);
+char	**get_envexec(t_cmd *comd, char **envorig);
 #endif

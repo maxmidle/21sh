@@ -25,7 +25,7 @@ int	main(int ac, char **av)
 		write(2, "test4\n", 6);
 		write(2, "test5\n", 6);
 		write(1, "et ca ?\n", 8);
-		return (0);
+		exit(0);
 	}
 	else
 	{

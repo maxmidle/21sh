@@ -9,9 +9,10 @@ int	ft_iscmdsep(char *cmd)
 
 int	ft_isredi(char *cmd)
 {
-	if (!ft_strcmp(cmd, ">") || !ft_strcmp(cmd, ">>") ||
-		!ft_strcmp(cmd, "<") || !ft_strcmp(cmd, "<<"))
+	if (!ft_strcmp(cmd, ">") || !ft_strcmp(cmd, ">>"))
 		return (1);
+	if (!ft_strcmp(cmd, "<") || !ft_strcmp(cmd, "<<"))
+		return (2);
 	return (0);
 }
 

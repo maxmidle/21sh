@@ -12,31 +12,31 @@
 
 #include "21sh.h"
 
-char	**run_cmd(char **command, char **envorig, char **envexec)
+char	**run_cmd(t_cmd *comd, char **envorig)
 {
+	char **envexec;
 	int	i;
 
-	if (!command)
-		return (envorig);
-	if ((i = env_verif(command, 0)) == -1)
-		i = ft_tablen(command);
-	if (command[i] && ft_isbuiltins(command[i]))
-		envorig = run_builtins(command, envorig);
-	else if (command[i] && !run_bin(&command[i], envorig, envexec))
+	envexec = get_envexec(comd, envorig);
+	i = 0;
+	if (!comd->cmd)
+		return (exit_runcmd(envorig, envexec, 0));
+	if ((i = env_verif(comd->cmd, 0)) == -1)
+		i = ft_tablen(comd->cmd);
+	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i]))
+		envorig = run_builtins(comd->cmd, envorig);
+	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envexec))
 	{
-		if (ft_strcmp(command[i], "exit"))
+		if (ft_strcmp(comd->cmd[i], "exit"))
 		{
 			write(2, "-21sh: ", 7);
-			write(2, command[i], ft_strlen(command[i]));
+			write(2, comd->cmd[i], ft_strlen(comd->cmd[i]));
 			write(2, ": command not found \n", 21);
 		}
 		else
-		{
-			ft_freetab(envorig);
-			return (NULL);
-		}
+			return (exit_runcmd(envorig, envexec, 1));
 	}
-	return (envorig);
+	return (exit_runcmd(envorig, envexec, 0));
 }
 
 char	**run_builtins(char **command, char **envorig)
@@ -62,10 +62,23 @@ char	**run_builtins(char **command, char **envorig)
 	return (envorig);
 }
 
+char	**exit_runcmd(char **envorig, char **envexec, int mode)
+{
+	ft_freetab(envexec);
+	if (mode == 1)
+	{
+		ft_freetab(envorig);
+		return (NULL);
+	}
+	return (envorig);
+}
+
 int		ft_isbuiltins(char *command)
 {
-	if (!ft_strcmp(command, "echo") || !ft_strcmp(command, "unsetenv") ||
-		!ft_strcmp(command, "setenv") || !ft_strcmp(command, "cd"))
+	if (!ft_strcmp(command, "echo"))
 		return (1);
+	if (!ft_strcmp(command, "unsetenv") ||	!ft_strcmp(command, "setenv") ||
+		 !ft_strcmp(command, "cd") || !ft_strcmp(command, "exit"))
+		return (2);
 	return (0);
 }

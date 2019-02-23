@@ -16,28 +16,24 @@ int		main(void)
 {
 	extern char	**environ;
 	char		**envorig;
-	char		**envexec;
 	t_cmd		*comd;
 
 	envorig = ft_tabdup(environ);
 	while (envorig)
 	{
 		comd = NULL;
-		wait(0);
 		ft_prompt(envorig);
 		comd = handle_line(read_line(envorig));
-		envexec = ft_tabdup(envorig);
-		if (comd && comd->cmd[0] && !ft_strcmp(comd->cmd[0], "env"))
+		if (!ft_strcmp(comd->cmd[0], "exit"))
 		{
-			if (env_verif(comd->cmd, 1) != -1)
-				envexec = env(comd->cmd, envorig, envexec);
+			ft_freetab(envorig);
+			envorig = NULL;
 		}
-		if (comd)
-			envorig = run_cmd(comd->cmd, envorig, envexec);
-		if (envexec)
-			ft_freetab(envexec);
+		else if (comd)
+			envorig = run_full_cmd(comd, envorig);
 		free_chain(comd);
 	}
+	exit(0);
 	return (0);
 }
 
@@ -50,7 +46,7 @@ void	ft_prompt(char **envorig)
 	while (envorig[i] && ft_strcmp(envorig[i], "PWD") != 61)
 		i++;
 	if (envorig[i] && (tmp = ft_strrchr(envorig[i], '/') + 1))
-		ft_printf("21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
+		ft_printf("-21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
 	else
-		ft_printf("21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
+		ft_printf("-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
 }

@@ -7,7 +7,12 @@ typedef struct		s_cmd
 	int		fd_in;
 	int		fd_out;
 	int		fd_err;
-	int		fd_dos;
+	int		save_in;
+	int		save_out;
+	int		save_err;
+	int		is_pipe;
+	char		*file_in;
+	char		**file_out;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }			t_cmd;
