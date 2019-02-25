@@ -8,21 +8,12 @@ t_cmd	*init_elem(char **command, t_cmd *previous, int ispipe)
 	if (!(elem = malloc(sizeof(t_cmd))))
 		return (NULL);
 	elem->cmd = init_cmd(command);
-	elem->fd_in = 0;
+	elem->fd_in = init_heredoc(command);
 	elem->fd_out = 1;
 	elem->fd_err = 2;
-	if (!previous)
-	{
-		elem->save_in = dup(0);
-		elem->save_out = dup(1);
-		elem->save_err = dup(2);
-	}
-	else
-	{
-		elem->save_in = previous->save_in;
-		elem->save_out = previous->save_out;
-		elem->save_err = previous->save_err;
-	}	
+	elem->save_in = init_saves(previous, 0);
+	elem->save_out = init_saves(previous, 1);
+	elem->save_err = init_saves(previous, 2);
 	elem->is_pipe = ispipe;
 	elem->file_in = init_fin(command);
 	elem->file_out = init_fout(command);
@@ -88,44 +79,25 @@ char	*init_fin(char **command)
 	{
 		while (command[i + 2] && ft_isredi(command[i + 2]) == 2)
 			i = i + 2;
-//		if (!ft_strcmp(command[i], "<<"))
-//			file_in = get_here_doc(command[i + 1])
 		if (!ft_strcmp(command[i], "<"))
 			return (ft_strdup(command[i + 1]));
 	}
 	return (NULL);
 }
 
-void	free_chain(t_cmd *comd)
+int	init_saves(t_cmd *previous, int mode)
 {
-	t_cmd *list;
-
-	list = comd;
-	while (list && list->prev)
-		list = list->prev;
-	while (list)
-	{
-//	printf("cmd : %s\nin : %d\nout : %d\nerr : %d\npipe : %d\n", list->cmd[0], list->fd_in, list->fd_out, list->fd_err, list->is_pipe);
-		if (list->cmd)	
-			ft_freetab(list->cmd);
-		if (list->fd_in != 0 && list->fd_in > 2)
-			close(list->fd_in);
-		if (list->fd_out != 1 && list->fd_in > 2)
-			close(list->fd_out);
-		if (list->file_in)
-			ft_strdel(&list->file_in);
-		if (list->file_out)
-		{
-			ft_freetab(list->file_out);
-			list->file_out = NULL;
-		}
-		close(list->save_in);
-		close(list->save_out);
-		close(list->save_err);
-		list->prev = NULL;
-		list = list->next;
-		comd->next = NULL;
-		free(comd);
-		comd = list;
-	}
-}	
+	if (mode == 0 && !previous)
+		return (dup(0));
+	else if (mode == 0)
+		return (previous->save_in);
+	if (mode == 1 && !previous)
+		return (dup(1));
+	else if (mode == 1)
+		return (previous->save_out);
+	if (mode == 2 && !previous)
+		return (dup(2));
+	else if (mode == 2)
+		return (previous->save_err);
+	return(-1);
+}

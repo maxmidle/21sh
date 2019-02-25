@@ -33,6 +33,8 @@ void	run_proc(t_cmd *comd, char **envorig)
 	{
 		create_file(list, envorig);
 		run_proc_cmd(list, envorig);
+		if (list->file_out)
+			write (1, "\0", 1);
 		exit (0);
 	}
 	wait(0);

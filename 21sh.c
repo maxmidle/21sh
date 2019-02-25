@@ -24,7 +24,7 @@ int		main(void)
 		comd = NULL;
 		ft_prompt(envorig);
 		comd = handle_line(read_line(envorig));
-		if (!ft_strcmp(comd->cmd[0], "exit"))
+		if (comd && !ft_strcmp(comd->cmd[0], "exit"))
 		{
 			ft_freetab(envorig);
 			envorig = NULL;

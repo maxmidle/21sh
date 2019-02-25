@@ -9,10 +9,11 @@ int	handle_file(t_cmd *comd, char **envorig)
 
 	pid = 1;
 	arg = malloc(sizeof(char *) * 3);
-	arg[0] = ft_strdup("touch");
+	arg[0] = ft_strdup("rm");
 	arg[1] = ft_strdup(comd->file_out[0]);
 	arg[2] = NULL;
-	pid = fork();
+	if (!ft_strcmp(comd->file_out[1], ">"))
+		pid = fork();
 	if (!pid)
 	{
 		run_bin(arg, envorig);
@@ -20,7 +21,7 @@ int	handle_file(t_cmd *comd, char **envorig)
 	}
 	wait(0);
 	ft_freetab(arg);
-	fd = open(comd->file_out[0], O_RDWR);
+	fd = open(comd->file_out[0], O_RDWR | O_CREAT);
 	if (!ft_strcmp(comd->file_out[1], ">>"))
 		while (read(fd, buff, 50));
 	return (fd);

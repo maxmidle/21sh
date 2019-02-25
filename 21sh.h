@@ -23,6 +23,7 @@
 # include "21sh_struct.h"
 
 int		run_bin(char **command, char **envexec);
+
 char	**read_line(char **environ);
 char	**split_line(char *str);
 int		fill_sep_line(char *str, char **command);
@@ -73,6 +74,10 @@ t_cmd	*init_elem(char **command, t_cmd *prev, int ispipe);
 char	**init_cmd(char **command);
 char	**init_fout(char **command);
 char	*init_fin(char **command);
+int	init_saves(t_cmd *previous, int mode);
+
+int	init_heredoc(char **command);
+int	get_heredoc(char *endline);
 void	free_chain(t_cmd *comd);
 
 char	**run_full_cmd(t_cmd *comd, char **envorig);

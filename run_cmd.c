@@ -18,7 +18,6 @@ char	**run_cmd(t_cmd *comd, char **envorig)
 	int	i;
 
 	envexec = get_envexec(comd, envorig);
-	i = 0;
 	if (!comd->cmd)
 		return (exit_runcmd(envorig, envexec, 0));
 	if ((i = env_verif(comd->cmd, 0)) == -1)
