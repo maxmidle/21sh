@@ -26,7 +26,8 @@ int		run_bin(char **command, char **envexec);
 
 char	**read_line(char **environ);
 char	**split_line(char *str);
-int		fill_sep_line(char *str, char **command);
+int		fill_sep_line(char *str, char **command, int start, int end);
+char	*fill_aggr(char *str);
 int		count_words(char *str);
 
 char	*tilde(char *command, char **environ);
@@ -69,6 +70,7 @@ void	create_file(t_cmd *comd, char **envorig);
 int	ft_iscmdsep(char *cmd);
 int	ft_isredi(char *cmd);
 int	ft_ischarsep(char cmd);
+int	ft_isaggr(char *cmd);
 
 t_cmd	*init_elem(char **command, t_cmd *prev, int ispipe);
 char	**init_cmd(char **command);
@@ -77,6 +79,8 @@ char	*init_fin(char **command);
 int	init_saves(t_cmd *previous, int mode);
 
 int	init_heredoc(char **command);
+char	*init_aggreg(char **command);
+void	dup_aggreg(t_cmd *comd);
 int	get_heredoc(char *endline);
 void	free_chain(t_cmd *comd);
 

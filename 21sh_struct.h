@@ -13,6 +13,7 @@ typedef struct		s_cmd
 	int		is_pipe;
 	char		*file_in;
 	char		**file_out;
+	char		*aggreg;
 	struct s_cmd	*next;
 	struct s_cmd	*prev;
 }			t_cmd;

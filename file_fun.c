@@ -12,7 +12,8 @@ int	handle_file(t_cmd *comd, char **envorig)
 	arg[0] = ft_strdup("rm");
 	arg[1] = ft_strdup(comd->file_out[0]);
 	arg[2] = NULL;
-	if (!ft_strcmp(comd->file_out[1], ">"))
+	if (!ft_strcmp(comd->file_out[1], ">") &&
+		!access(comd->file_out[0], F_OK))
 		pid = fork();
 	if (!pid)
 	{

@@ -43,13 +43,7 @@ t_cmd	*make_list(char **command, t_cmd *list, int ispipe)
 
 int	get_next_sep(char **command, int i)
 {
-	while (command[i] && !ft_iscmdsep(command[i]) && !ft_isredi(command[i]))
+	while (command[i] && !ft_iscmdsep(command[i]))
 		i++;
-	if (command[i] && ft_isredi(command[i]))
-	{
-		while (command[i + 2] && ft_isredi(command[i + 2]))
-			i = i + 2;
-		i = i + 2;
-	}
 	return (i);
 }

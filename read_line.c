@@ -43,47 +43,65 @@ char	**read_line(char **environ)
 char	**split_line(char *str)
 {
 	char	**cmd;
-	int		wordct;
 	int		i;
 	int		start;
 	int		end;
 
 	i = 0;
 	end = 0;
-	wordct = count_words(str);
-	cmd = (char **)malloc(sizeof(char *) * (wordct + 1));
-	while (i < wordct)
+	cmd = (char **)malloc(sizeof(char *) * (count_words(str) + 1));
+	while (str[end] && ft_issep(str[end]))
+		end++;
+	while (str[end])
 	{
+		start = end;
+		if (str[end] && !ft_isaggr(&str[end]))
+		{
+			while (str[end] && !ft_issep(str[end]) &&
+				!ft_ischarsep(str[end]))
+				end++;
+		}
+		end += fill_sep_line(str, &cmd[i++], start, end);
+	//	i++;
 		while (str[end] && ft_issep(str[end]))
 			end++;
-		start = end;
-		while (str[end] && !ft_issep(str[end]) &&
-			!ft_ischarsep(str[end]))
-			end++;
-		cmd[i] = ft_strsub(str, start, end - start);
-		if (str[end] && !cmd)
-			end += fill_sep_line(&str[end], &cmd[i]);
-		i++;
 	}
-	cmd[i] = NULL;
+		cmd[i] = NULL;
 	return (cmd);
 }
 
-int		fill_sep_line(char *str, char **command)
+int		fill_sep_line(char *str, char **command, int start, int end)
 {
-	if (!ft_strncmp(str, ">>", 2))
+	if (str[end] && ft_isaggr(&str[end]))
+		*command = fill_aggr(&str[end]);
+	else if ((*command = ft_strsub(str, start, end - start)))
+		return(0);
+	else if (str[end] && !ft_strncmp(&str[end], ">>", 2))
 		*command = ft_strdup(">>");
-	else if (!ft_strncmp(str, ">", 1))
+	else if (str[end] && !ft_strncmp(&str[end], ">", 1))
 		*command = ft_strdup(">");
-	else if (!ft_strncmp(str, "<<", 2))
+	else if (str[end] && !ft_strncmp(&str[end], "<<", 2))
 		*command = ft_strdup("<<");
-	else if (!ft_strncmp(str, "<", 1))
+	else if (str[end] && !ft_strncmp(&str[end], "<", 1))
 		*command = ft_strdup("<");
-	else if (!ft_strncmp(str, "|", 1))
+	else if (str[end] && !ft_strncmp(&str[end], "|", 1))
 		*command = ft_strdup("|");
-	else if (!ft_strncmp(str, ";", 1))
+	else if (str[end] && !ft_strncmp(&str[end], ";", 1))
 		*command = ft_strdup(";");
 	return (ft_strlen(*command));
+}
+
+char	*fill_aggr(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isdigit(str[i]))
+		i++;
+	i += 2;
+	while (str[i] && (ft_isdigit(str[i]) || str[i] == '-'))
+		i++;
+	return (ft_strndup(str, i));	
 }
 
 int		count_words(char *str)

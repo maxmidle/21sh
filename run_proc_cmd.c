@@ -51,7 +51,7 @@ void	run_proc_cmd(t_cmd *comd, char **envorig)
 		pipe(fd);
 		list->next->fd_in = fd[0];
 		list->fd_out = fd[1];
-	}	
+	}
 	ft_dupfd(list);
 	envorig = run_cmd(list, envorig);
 	if ((list->next && list->next->is_pipe))
@@ -89,4 +89,5 @@ void	ft_dupfd(t_cmd *comd)
 		dup2(comd->fd_err, 2);
 	else
 		dup2(comd->save_err, 2);
+	dup_aggreg(comd);
 }

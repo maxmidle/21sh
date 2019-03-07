@@ -17,6 +17,7 @@ t_cmd	*init_elem(char **command, t_cmd *previous, int ispipe)
 	elem->is_pipe = ispipe;
 	elem->file_in = init_fin(command);
 	elem->file_out = init_fout(command);
+	elem->aggreg = init_aggreg(command);
 	elem->next = NULL;
 	elem->prev = previous;
 	return (elem);
@@ -31,17 +32,24 @@ char	**init_cmd(char **command)
 	size = 0;
 	i = 0;
 	cmd = NULL;
-	while (command[size] && !ft_iscmdsep(command[size]) &&
-		!ft_isredi(command[size]))
-		size++;
-	if (!(cmd = (char **)malloc(sizeof(char *) * (size + 1))))
-		return (NULL);
-	while (i < size)
-	{
-		cmd[i] = ft_strdup(command[i]);
+	while (command[i] && !ft_iscmdsep(command[i]) && !ft_isredi(command[i]))
 		i++;
+	if (!(cmd = (char **)malloc(sizeof(char *) * (i + 1))))
+		return (NULL);
+	i = 0;
+	while (command[size + i] && !ft_iscmdsep(command[size + i]) &&
+		!ft_isredi(command[size + i]))
+	{
+		if (ft_isaggr(command[size + i]))
+			i++;
+		if (command[size + i] && !ft_iscmdsep(command[size + i]) &&
+			!ft_isredi(command[size + i]))
+		{
+			cmd[size] = ft_strdup(command[size + i]);
+			size++;
+		}
 	}
-	cmd[i] = NULL;
+	cmd[size] = NULL;
 	return (cmd);
 }
 

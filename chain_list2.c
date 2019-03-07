@@ -48,6 +48,59 @@ int	get_heredoc(char *endline)
 	return (fd[0]);
 }
 
+char	*init_aggreg(char **command)
+{
+	int	infile;
+	int	i;
+	char	*tmp;
+
+	infile = 0;
+	i = 0;
+	while (command[i] && !ft_iscmdsep(command[i]))
+	{
+		if (ft_isredi(command[i]) == 1)
+			infile = 1;
+		if (ft_isaggr(command[i]))
+		{
+			if (infile == 0 ||
+				command[i][ft_strlen(command[i]) - 1] != '1')
+				return (ft_strdup(command[i]));
+			else
+			{
+				tmp = ft_strdup(command[i]);
+				tmp[ft_strlen(tmp) - 1] = 'f';
+				tmp[ft_strlen(tmp)] = '\0';
+				return (tmp);
+			}
+		}
+		i++;
+	}
+	return (NULL);
+}
+
+void	dup_aggreg(t_cmd *comd)
+{
+	int	dest;
+	
+	dest = 0;
+	if (comd->aggreg)
+	{
+		while (ft_isdigit(comd->aggreg[dest]))
+			dest++;
+		dest += 2;
+		if (comd->aggreg[dest] == 'f')
+			dup2(comd->fd_out, ft_atoi(comd->aggreg));
+		else if (comd->aggreg[dest] == '-')
+			close(ft_atoi(comd->aggreg));
+		else if (ft_atoi(&comd->aggreg[dest]) == 0)
+			dup2(comd->save_in, ft_atoi(comd->aggreg));
+		else if (ft_atoi(&comd->aggreg[dest]) == 1)
+			dup2(comd->save_out, ft_atoi(comd->aggreg));
+		else if (ft_atoi(&comd->aggreg[dest]) == 2)
+			dup2(comd->save_err, ft_atoi(comd->aggreg));
+	}
+}
+
 void	free_chain(t_cmd *comd)
 {
 	t_cmd *list;
@@ -58,6 +111,7 @@ void	free_chain(t_cmd *comd)
 	while (list)
 	{
 //	printf("cmd : %s\nin : %d\nout : %d\nerr : %d\npipe : %d\n", list->cmd[0], list->fd_in, list->fd_out, list->fd_err, list->is_pipe);
+		ft_strdel(&list->aggreg);
 		if (list->cmd)	
 			ft_freetab(list->cmd);
 		if (list->fd_in != 0 && list->fd_in > 2)

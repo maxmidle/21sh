@@ -24,12 +24,13 @@ int		main(void)
 		comd = NULL;
 		ft_prompt(envorig);
 		comd = handle_line(read_line(envorig));
-		if (comd && !ft_strcmp(comd->cmd[0], "exit"))
+		if (comd && comd->cmd && comd->cmd[0] &&
+			!ft_strcmp(comd->cmd[0], "exit"))
 		{
 			ft_freetab(envorig);
 			envorig = NULL;
 		}
-		else if (comd)
+		else if (comd && comd->cmd && comd->cmd[0])
 			envorig = run_full_cmd(comd, envorig);
 		free_chain(comd);
 	}
