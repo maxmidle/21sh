@@ -12,25 +12,25 @@
 
 #include "21sh.h"
 
-int	run_bin(char **command, char **envexec)
+int	run_bin(char **command, char **envorig, char **envexec)
 {
 	char	**bpath;
 	int		y;
-	pid_t	pid;
-	
+
 	y = 0;
-	if (!(bpath = ft_strsplit(getenv("PATH"), ':')))
+	if (command[0][0] == '/' && !access(command[0], X_OK))
+		return (exec_bin(command, command[0], envexec));
+	if ((y = env_search(envorig, "PATH")) == -1)
 		return (0);
+	bpath = ft_strsplit(&envorig[y][5], ':');
+	y = 0;
 	while (bpath[y])
 	{
 		ft_strconc(&bpath[y], "/");
 		ft_strconc(&bpath[y], command[0]);
 		if (!access(bpath[y], X_OK))
 		{
-			pid = fork();
-			if (pid == 0)
-				execve(bpath[y], command, envexec);
-			wait(0);
+			exec_bin(command, bpath[y], envexec);
 			ft_freetab(bpath);
 			return (1);
 		}
@@ -38,4 +38,15 @@ int	run_bin(char **command, char **envexec)
 	}
 	ft_freetab(bpath);
 	return (0);
+}
+
+int	exec_bin(char **command, char *cmd, char **envexec)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == 0)
+		execve(cmd, command, envexec);
+	wait(0);
+	return (1);
 }

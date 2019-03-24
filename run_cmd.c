@@ -24,7 +24,7 @@ char	**run_cmd(t_cmd *comd, char **envorig)
 		i = ft_tablen(comd->cmd);
 	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i]))
 		envorig = run_builtins(comd->cmd, envorig);
-	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envexec))
+	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envorig, envexec))
 	{
 		if (ft_strcmp(comd->cmd[i], "exit"))
 		{

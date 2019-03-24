@@ -21,6 +21,7 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 	}
 	return (envorig);
 }
+
 void	run_proc(t_cmd *comd, char **envorig)
 {
 	t_cmd	*list;

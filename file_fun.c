@@ -9,7 +9,7 @@ int	handle_file(t_cmd *comd, char **envorig)
 
 	pid = 1;
 	arg = malloc(sizeof(char *) * 3);
-	arg[0] = ft_strdup("rm");
+	arg[0] = ft_strdup("/bin/rm");
 	arg[1] = ft_strdup(comd->file_out[0]);
 	arg[2] = NULL;
 	if (!ft_strcmp(comd->file_out[1], ">") &&
@@ -17,7 +17,7 @@ int	handle_file(t_cmd *comd, char **envorig)
 		pid = fork();
 	if (!pid)
 	{
-		run_bin(arg, envorig);
+		run_bin(arg, envorig, envorig);
 		exit(0);
 	}
 	wait(0);

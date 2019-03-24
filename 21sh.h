@@ -22,7 +22,8 @@
 # include "libft/ft_printf.h"
 # include "21sh_struct.h"
 
-int		run_bin(char **command, char **envexec);
+int		run_bin(char **command, char **envorig, char **envexec);
+int	exec_bin(char **command, char *cmd, char **envexec);
 
 char	**read_line(char **environ);
 char	**split_line(char *str);
