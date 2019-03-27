@@ -93,11 +93,16 @@ void	dup_aggreg(t_cmd *comd)
 		else if (comd->aggreg[dest] == '-')
 			close(ft_atoi(comd->aggreg));
 		else if (ft_atoi(&comd->aggreg[dest]) == 0)
-			dup2(comd->save_in, ft_atoi(comd->aggreg));
+			dup2(comd->fd_in, ft_atoi(comd->aggreg));
 		else if (ft_atoi(&comd->aggreg[dest]) == 1)
-			dup2(comd->save_out, ft_atoi(comd->aggreg));
+			{
+				if (comd->next && comd->next->is_pipe)
+					dup2(comd->fd_out, ft_atoi(comd->aggreg));
+				else
+					dup2(comd->save_out, ft_atoi(comd->aggreg));
+			}
 		else if (ft_atoi(&comd->aggreg[dest]) == 2)
-			dup2(comd->save_err, ft_atoi(comd->aggreg));
+			dup2(comd->fd_err, ft_atoi(comd->aggreg));
 	}
 }
 

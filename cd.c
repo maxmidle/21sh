@@ -25,7 +25,7 @@ void	ft_cd(char **command, char **envorig)
 		path = tilde(ft_strdup("~"), envorig);
 	if (!lstat(path, &sb))
 	{
-		if (S_ISDIR(sb.st_mode))
+		if (S_ISDIR(sb.st_mode) || S_ISLNK(sb.st_mode))
 		{
 			if (!chdir(path))
 				change_pwd(envorig, oldpwd);

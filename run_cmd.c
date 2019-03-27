@@ -12,14 +12,12 @@
 
 #include "21sh.h"
 
-char	**run_cmd(t_cmd *comd, char **envorig)
+char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 {
-	char **envexec;
 	int	i;
 
-	envexec = get_envexec(comd, envorig);
 	if (!comd->cmd)
-		return (exit_runcmd(envorig, envexec, 0));
+		return (exit_runcmd(envorig, 0));
 	if ((i = env_verif(comd->cmd, 0)) == -1)
 		i = ft_tablen(comd->cmd);
 	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i]))
@@ -33,9 +31,9 @@ char	**run_cmd(t_cmd *comd, char **envorig)
 			write(2, ": command not found \n", 21);
 		}
 		else
-			return (exit_runcmd(envorig, envexec, 1));
+			return (exit_runcmd(envorig, 1));
 	}
-	return (exit_runcmd(envorig, envexec, 0));
+	return (exit_runcmd(envorig, 0));
 }
 
 char	**run_builtins(char **command, char **envorig)
@@ -61,9 +59,8 @@ char	**run_builtins(char **command, char **envorig)
 	return (envorig);
 }
 
-char	**exit_runcmd(char **envorig, char **envexec, int mode)
+char	**exit_runcmd(char **envorig, int mode)
 {
-	ft_freetab(envexec);
 	if (mode == 1)
 	{
 		ft_freetab(envorig);

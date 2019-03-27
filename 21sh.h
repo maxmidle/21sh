@@ -23,7 +23,7 @@
 # include "21sh_struct.h"
 
 int		run_bin(char **command, char **envorig, char **envexec);
-int	exec_bin(char **command, char *cmd, char **envexec);
+int	exec_bin(char *cmd, char **command, char **envexec);
 
 char	**read_line(char **environ);
 char	**split_line(char *str);
@@ -56,9 +56,9 @@ char	**dollar(char **command, char **environ);
 char	*dollar_verif(char *command, char **environ);
 char	*dollar_fill(char *command, char *environ);
 
-char	**run_cmd(t_cmd *comd, char **envorig);
+char	**run_cmd(t_cmd *comd, char **envorig, char **envexec);
 char	**run_builtins(char **command, char **envorig);
-char	**exit_runcmd(char **envorig, char **envexec, int mode);
+char	**exit_runcmd(char **envorig, int mode);
 int		ft_isbuiltins(char *command);
 
 t_cmd	*handle_line(char **command);
@@ -67,6 +67,7 @@ int	get_next_sep(char **command, int i);
 
 int	handle_file(t_cmd *comd, char **envorig);
 void	create_file(t_cmd *comd, char **envorig);
+void	perm_file(t_cmd *comd, char **envorig);
 
 int	ft_iscmdsep(char *cmd);
 int	ft_isredi(char *cmd);
@@ -86,8 +87,8 @@ int	get_heredoc(char *endline);
 void	free_chain(t_cmd *comd);
 
 char	**run_full_cmd(t_cmd *comd, char **envorig);
-void	run_proc(t_cmd *comd, char **envorig);
-void	run_proc_cmd(t_cmd *comd, char **envorig);
+void	run_proc(t_cmd *comd, char **envorig, char **envexec);
+void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec);
 void	ft_dupfd(t_cmd *comd);
 char	**get_envexec(t_cmd *comd, char **envorig);
 #endif

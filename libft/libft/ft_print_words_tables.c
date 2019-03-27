@@ -12,19 +12,19 @@
 
 #include "libft.h"
 
-void	ft_print_words_tables(char **tab)
+void	ft_print_words_tables(char **tabl)
 {
 	unsigned long	i;
 	int				j;
 
 	i = 0;
 	j = 0;
-	while (tab[i] != '\0')
+	while (tabl[i] != '\0')
 	{
 		j = 0;
-		while (tab[i][j] != '\0')
+		while (tabl[i][j] != '\0')
 		{
-			ft_putchar(tab[i][j]);
+			ft_putchar(tabl[i][j]);
 			j++;
 		}
 		ft_putchar('\n');

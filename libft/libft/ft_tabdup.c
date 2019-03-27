@@ -12,18 +12,18 @@
 
 #include "libft.h"
 
-char	**ft_tabdup(char **tab)
+char	**ft_tabdup(char **tabl)
 {
 	int		i;
 	char	**cpy;
 
 	i = 0;
-	if (!tab)
+	if (!tabl)
 		return (NULL);
-	cpy = (char **)malloc(sizeof(char *) * (ft_tablen(tab) + 1));
-	while (tab[i])
+	cpy = (char **)malloc(sizeof(char *) * (ft_tablen(tabl) + 1));
+	while (tabl[i])
 	{
-		cpy[i] = ft_strdup(tab[i]);
+		cpy[i] = ft_strdup(tabl[i]);
 		i++;
 	}
 	cpy[i] = NULL;

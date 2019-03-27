@@ -2,7 +2,7 @@
 
 int	handle_file(t_cmd *comd, char **envorig)
 {
-	int pid;
+	pid_t pid;
 	int fd;
 	char **arg;
 	char buff[50];
@@ -23,9 +23,32 @@ int	handle_file(t_cmd *comd, char **envorig)
 	wait(0);
 	ft_freetab(arg);
 	fd = open(comd->file_out[0], O_RDWR | O_CREAT);
+	perm_file(comd, envorig);
 	if (!ft_strcmp(comd->file_out[1], ">>"))
 		while (read(fd, buff, 50));
 	return (fd);
+}
+
+void	perm_file(t_cmd *comd, char **envorig)
+{
+	char **arg;
+	pid_t pid;
+
+	pid = 1;
+	arg = malloc(sizeof(char *) * 4);
+	arg[0] = ft_strdup("/bin/chmod");
+	arg[1] = ft_strdup("644");
+	arg[2] = ft_strdup(comd->file_out[0]);
+	arg[3] = NULL;
+	if(!access(comd->file_out[0], F_OK))
+		pid = fork();
+	if (!pid)
+	{
+		run_bin(arg, envorig, envorig);
+		exit(0);
+	}
+	wait(0);
+	ft_freetab(arg);
 }
 
 void	create_file(t_cmd *comd, char **envorig)

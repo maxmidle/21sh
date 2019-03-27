@@ -17,7 +17,7 @@ all: $(NAME)
 $(NAME): $(SRCS)
 	@make -C libft
 	@gcc $(FLAG) -c $(SRCS)
-	@gcc $(FLAG) -o $(NAME) $(OBJS) $(LIB)
+	@gcc $(FLAG) -o $(NAME) $(OBJS) $(LIB) -l termcap
 	@echo "\033[32m21sh............[OK]\033[0m"
 
 clean:
