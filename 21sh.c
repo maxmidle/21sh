@@ -34,7 +34,6 @@ int		main(void)
 			envorig = run_full_cmd(comd, envorig);
 		free_chain(comd);
 	}
-	exit(0);
 	return (0);
 }
 

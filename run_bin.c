@@ -18,7 +18,7 @@ int	run_bin(char **command, char **envorig, char **envexec)
 	int		y;
 
 	y = 0;
-	if (ft_strchr(command[0], '/') && !access(command[0], X_OK))
+	if (command[0][0] == '/' && !access(command[0], X_OK))
 		return (exec_bin(command[0], command, envexec));
 	if ((y = env_search(envorig, "PATH")) == -1)
 		return (0);
@@ -46,7 +46,30 @@ int	exec_bin(char *cmd, char **command, char **envexec)
 
 	pid = fork();
 	if (!pid)
+	{
 		execve(cmd, command, envexec);
+		exit(0);
+	}
 	wait(0);
 	return (1);
+}
+
+void	ft_kill(int prevpid, char **envorig)
+{
+	char **cmd;
+	pid_t pid;
+
+	pid = fork();
+	cmd = (char **)malloc(sizeof(char *) * 4);
+	cmd[0] = ft_strdup("pkill");
+	cmd[1] = ft_strdup("-P");
+	cmd[2] = ft_itoa(prevpid);
+	cmd[3] = NULL;
+	if (!pid)
+	{
+		execve("/usr/bin/pkill", cmd, envorig);
+		exit(0);
+	}
+	wait(0);
+	ft_freetab(cmd);
 }

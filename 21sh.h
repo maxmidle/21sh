@@ -23,6 +23,7 @@
 # include "21sh_struct.h"
 
 int		run_bin(char **command, char **envorig, char **envexec);
+void	ft_kill(int prevpid, char **envorig);
 int	exec_bin(char *cmd, char **command, char **envexec);
 
 char	**read_line(char **environ);
@@ -88,7 +89,7 @@ void	free_chain(t_cmd *comd);
 
 char	**run_full_cmd(t_cmd *comd, char **envorig);
 void	run_proc(t_cmd *comd, char **envorig, char **envexec);
-void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec);
+void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid);
 void	ft_dupfd(t_cmd *comd);
 char	**get_envexec(t_cmd *comd, char **envorig);
 #endif

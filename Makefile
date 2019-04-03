@@ -2,7 +2,7 @@ NAME = 21sh
 
 INCLUDE = 21sh.h
 
-FLAG = -Wall -Wextra -Werror
+FLAG = #-Wall -Wextra -Werror
 
 SRCS = 21sh.c run_bin.c read_line.c tilde.c env.c env_verif.c cd.c echo.c \
 	dollar.c run_cmd.c handle_line.c chain_list.c chain_list2.c ft_is.c \
