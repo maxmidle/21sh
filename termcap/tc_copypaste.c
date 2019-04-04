@@ -1,36 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strins.c                                        :+:      :+:    :+:   */
+/*   tc_endhome.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/30 18:41:19 by radler            #+#    #+#             */
-/*   Updated: 2019/04/04 10:11:07 by radler           ###   ########.fr       */
+/*   Created: 2019/04/04 13:53:42 by radler            #+#    #+#             */
+/*   Updated: 2019/04/04 14:52:37 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "termcap.h"
 
-void	ft_strins(char **dest, char *instr, size_t i)
+char	*tc_copy(t_line *line)
 {
-	char *tmp;
+	free(line->clipboard);
+	line->clipboard = ft_strdup(&line->str[line->cpos]);
+	return (line->clipboard);
+}
 
-	tmp = NULL;
-	if (i >= ft_strlen(*dest))
-		ft_strconc(dest, instr);
-	else
+char	*tc_paste(t_line *line)
+{
+	int i;
+	char buff[7];
+
+	buff[1] = '\0';
+	i = 0;
+	while (line->clipboard[i])
 	{
-		if (i > 0)
-			tmp = ft_strsub(*dest, 0, i);
-		else
-			tmp = ft_strnew(0);
-		if (tmp)
-		{
-			ft_strconc(&tmp, instr);
-			ft_strconc(&tmp, &dest[0][i]);
-		}
-		free(*dest);
-		*dest = tmp;
+			buff[0] = line->clipboard[i];
+			line->str = tc_putchar(line, buff);
+			i++;
 	}
+	return (line->str);
 }

@@ -6,7 +6,7 @@
 #    By: radler <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/11/16 18:33:34 by radler            #+#    #+#              #
-#    Updated: 2018/06/13 17:45:18 by radler           ###   ########.fr        #
+#    Updated: 2019/04/04 10:30:14 by radler           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ SRCS = ft_print_words_tables.c ft_strplc.c ft_strjoin.c ft_putchar.c \
 	ft_memdel.c ft_strequ.c ft_tolower.c ft_memmove.c ft_strcdup.c \
 	ft_striter.c ft_toupper.c ft_memset.c ft_striteri.c ft_upcase.c \
 	ft_lstnew.c ft_lstdelone.c ft_lstdel.c ft_lstadd.c ft_lstiter.c \
-	ft_lstmap.c ft_strconc.c ft_strnconc.c ft_swap.c ft_strrev.c
+	ft_lstmap.c ft_strconc.c ft_strnconc.c ft_swap.c ft_strrev.c ft_strcdel.c
 
 OBJET = $(SRCS:.c=.o)
 

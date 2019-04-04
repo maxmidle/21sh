@@ -66,10 +66,10 @@ void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid)
 		envorig = run_cmd(list, envorig, envexec);
 		if (prevpid != 0)
 			ft_kill(prevpid, envorig);
+		ft_freetab(envorig);
+		ft_freetab(envexec);
 		exit(0);
 	}
-//	if (!list->next || !list->next->is_pipe)
-	//	wait(0);
 	if ((list->next && list->next->is_pipe))
 		close(list->fd_out);
 	if (list->next && list->next->is_pipe)

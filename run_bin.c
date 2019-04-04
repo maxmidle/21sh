@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:19:12 by radler            #+#    #+#             */
-/*   Updated: 2019/01/30 18:22:02 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/04 09:02:24 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	run_bin(char **command, char **envorig, char **envexec)
 	int		y;
 
 	y = 0;
-	if (command[0][0] == '/' && !access(command[0], X_OK))
+	if (ft_strchr(command[0], '/') && !access(command[0], X_OK))
 		return (exec_bin(command[0], command, envexec));
 	if ((y = env_search(envorig, "PATH")) == -1)
 		return (0);

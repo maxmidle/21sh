@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:26:26 by radler            #+#    #+#             */
-/*   Updated: 2019/01/30 18:42:34 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/04 10:29:47 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include "libft_struct.h"
 
+char	*ft_strcdel(char *str, int i);
 char	*ft_strnconc(char **s1, size_t ls1, char *s2, size_t ls2);
 void	ft_strbackconc(char **s1, char *s2);
 void	ft_strconc(char **s1, char *s2);

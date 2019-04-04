@@ -1,36 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strins.c                                        :+:      :+:    :+:   */
+/*   tc_stop.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/30 18:41:19 by radler            #+#    #+#             */
-/*   Updated: 2019/04/04 10:11:07 by radler           ###   ########.fr       */
+/*   Created: 2019/04/04 15:44:59 by radler            #+#    #+#             */
+/*   Updated: 2019/04/04 16:09:37 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "termcap.h"
 
-void	ft_strins(char **dest, char *instr, size_t i)
+t_line		*tc_stop(t_line *line)
 {
-	char *tmp;
+	line->cpos = tc_end(line);
+	ft_strclr(line->str);
+	line->stop = 1;
+	return (line);
+}
 
-	tmp = NULL;
-	if (i >= ft_strlen(*dest))
-		ft_strconc(dest, instr);
-	else
-	{
-		if (i > 0)
-			tmp = ft_strsub(*dest, 0, i);
-		else
-			tmp = ft_strnew(0);
-		if (tmp)
-		{
-			ft_strconc(&tmp, instr);
-			ft_strconc(&tmp, &dest[0][i]);
-		}
-		free(*dest);
-		*dest = tmp;
-	}
+t_line		*tc_quit(t_line *line)
+{
+	free(line->str);
+	line->str = ft_strdup("exit");
+	line->stop = 1;
+	return (line);
 }
