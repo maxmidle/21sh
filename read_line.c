@@ -12,23 +12,15 @@
 
 #include "21sh.h"
 
-char	**read_line(char **environ)
+char	**read_line(char **environ, char ***history)
 {
 	char	**command;
 	char	*tmp;
-	char	buff[2];
-	int		i;
 
-	i = 0;
-	buff[1] = '\0';
-	buff[0] = '\0';
 	tmp = NULL;
-	tmp = ft_strnew(0);
-	while (buff[0] != '\n')
-	{
-		ft_strconc(&tmp, buff);
-		read(0, &buff, 1);
-	}
+	tmp = tc_readline(*history);
+	if (tmp)
+		*history = hist_add(history, tmp);
 	if (count_words(tmp) == 0)
 	{
 		ft_strdel(&tmp);

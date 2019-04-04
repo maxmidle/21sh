@@ -20,13 +20,14 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "libft/ft_printf.h"
+# include "termcap/termcap.h"
 # include "21sh_struct.h"
 
 int		run_bin(char **command, char **envorig, char **envexec);
 void	ft_kill(int prevpid, char **envorig);
 int	exec_bin(char *cmd, char **command, char **envexec);
 
-char	**read_line(char **environ);
+char	**read_line(char **environ, char ***history);
 char	**split_line(char *str);
 int		fill_sep_line(char *str, char **command, int start, int end);
 char	*fill_aggr(char *str);

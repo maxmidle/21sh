@@ -16,14 +16,16 @@ int		main(void)
 {
 	extern char	**environ;
 	char		**envorig;
+	char		**history;
 	t_cmd		*comd;
 
 	envorig = ft_tabdup(environ);
+	history = NULL;
 	while (envorig)
 	{
 		comd = NULL;
 		ft_prompt(envorig);
-		comd = handle_line(read_line(envorig));
+		comd = handle_line(read_line(envorig, &history));
 		if (comd && comd->cmd && comd->cmd[0] &&
 			!ft_strcmp(comd->cmd[0], "exit"))
 		{
@@ -34,6 +36,7 @@ int		main(void)
 			envorig = run_full_cmd(comd, envorig);
 		free_chain(comd);
 	}
+	ft_freetab(history);
 	return (0);
 }
 

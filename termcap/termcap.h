@@ -10,22 +10,25 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft/libft.h"
-#include <stdlib.h>
-#include <curses.h>
-#include <term.h>
-#include <termios.h>
-#include <unistd.h>
+#ifndef TERMCAP_H
+# define TERMCAP_H
+# include "../libft/libft/libft.h"
+# include <curses.h>
+# include <term.h>
+# include <termios.h>
 
 typedef struct	s_line
 {
+	char	**hist;
 	char	*str;
 	char	*clipboard;
 	int		cpos;
 	int		stop;
+	int		hpos;
+	int		hsize;
 }				t_line;
 
-char			*tc_readline(void);
+char			*tc_readline(char **history);
 t_line			*tc_handlechar(t_line *line, char buff[7]);
 t_line			*tc_handlectrl(t_line *line, char buff[7]);
 struct termios	term_init(void);
@@ -46,3 +49,10 @@ char			*tc_copy(t_line *line);
 
 t_line			*tc_stop(t_line *line);
 t_line			*tc_quit(t_line *line);
+
+t_line			*tc_history(t_line *line, char buff[7]);
+t_line			*tc_up(t_line *line);
+t_line			*tc_down(t_line *line);
+char			**hist_add(char ***history, char *str);
+
+#endif
