@@ -10,7 +10,10 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 	{
 		envexec = get_envexec(list, envorig);
 		if (ft_isbuiltins(list->cmd[0]) != 2)
-			run_proc(list, envorig, envexec);
+		{
+			create_file(list, envorig);
+			run_proc_cmd(list, envorig, envexec, 0);
+		}
 		else
 		{
 			create_file(list, envorig);
@@ -25,24 +28,15 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 	return (envorig);
 }
 
-void	run_proc(t_cmd *comd, char **envorig, char **envexec)
+void	run_proc(t_cmd *list, char **envorig, char **envexec, pid_t prevpid)
 {
-	t_cmd	*list;
-//	pid_t	pid_cmd;
-
-	list = comd;
-//	pid_cmd = 1;
-//	pid_cmd = fork();
-//	if (!pid_cmd)
-//	{
-		create_file(list, envorig);
-		run_proc_cmd(list, envorig, envexec, 0);
-//		if (list->file_out)
-		//	write (1, "\0", 1);
-//		exit(0);
-//	}
-//	write(2, "oui\n", 4);
-//	wait(0);
+		ft_dupfd(list);
+		envorig = run_cmd(list, envorig, envexec);
+		if (prevpid != 0)
+			ft_kill(prevpid, envorig);
+		ft_freetab(envorig);
+		ft_freetab(envexec);
+		exit(0);
 }
 
 void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid)
@@ -50,8 +44,8 @@ void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid)
 	t_cmd	*list;
 	int	fd[2];
 	pid_t	pid;
+	pid_t	ctrlpid;
 
-	pid = 1;
 	list = comd;
 	if (list->next && list->next->is_pipe)
 	{
@@ -61,20 +55,12 @@ void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid)
 	}
 	pid = fork();
 	if (!pid)
-	{
-		ft_dupfd(list);
-		envorig = run_cmd(list, envorig, envexec);
-		if (prevpid != 0)
-			ft_kill(prevpid, envorig);
-		ft_freetab(envorig);
-		ft_freetab(envexec);
-		exit(0);
-	}
+		run_proc(list, envorig, envexec, prevpid);
 	if ((list->next && list->next->is_pipe))
 		close(list->fd_out);
 	if (list->next && list->next->is_pipe)
 		run_proc_cmd(list->next, envorig, envexec, pid);
-		wait(0);
+	waitpid(pid ,0, 0);
 }
 
 char	**get_envexec(t_cmd *comd, char **envorig)

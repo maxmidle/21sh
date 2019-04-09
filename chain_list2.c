@@ -23,23 +23,18 @@ int	get_heredoc(char *endline)
 	char	*str;
 	int		fd[2];
 	int		stop;
-	char	buff[2];
 
 	pipe(fd);
-	buff[1] = '\0';
 	stop = 1;
 	while (stop)
 	{
-		str = ft_strnew(0);
-		buff[0] = 'a';
 		ft_printf("here_doc : \x1B[35m%s \x1B[33m}>\x1B[0m", endline);
-		while (buff[0] != '\n')
+		str = tc_readhd(endline);
+		if (ft_strcmp(str, endline))
 		{
-			read(0, buff, 1);
-			ft_strconc(&str, buff);
-		} 
-		if (ft_strncmp(str, endline, (ft_strlen(str) - 1)))
 			write(fd[1], str, ft_strlen(str));
+			write(fd[1], "\n", 1);
+		}
 		else
 			stop = 0;
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/01/30 18:24:55 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/05 14:21:48 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	ft_iscmdsep(char *cmd);
 int	ft_isredi(char *cmd);
 int	ft_ischarsep(char cmd);
 int	ft_isaggr(char *cmd);
+int	ft_isquote(char cmd);
 
 t_cmd	*init_elem(char **command, t_cmd *prev, int ispipe);
 char	**init_cmd(char **command);
@@ -89,8 +90,12 @@ int	get_heredoc(char *endline);
 void	free_chain(t_cmd *comd);
 
 char	**run_full_cmd(t_cmd *comd, char **envorig);
-void	run_proc(t_cmd *comd, char **envorig, char **envexec);
+void	run_proc(t_cmd *list, char **envorig, char **envexec, pid_t prevpid);
 void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid);
 void	ft_dupfd(t_cmd *comd);
 char	**get_envexec(t_cmd *comd, char **envorig);
+
+char	*get_quote(char *str, int start);
+char	*prompt_quote(char *str, int start);
+int		get_next_quote(char *str, int start, int mode);
 #endif

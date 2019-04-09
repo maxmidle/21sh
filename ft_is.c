@@ -43,3 +43,10 @@ int	ft_isaggr(char *cmd)
 	}
 	return (1);
 }
+
+int	ft_isquote(char cmd)
+{
+	if (cmd == '\'' || cmd == '\"')
+		return (1);
+	return (0);
+}

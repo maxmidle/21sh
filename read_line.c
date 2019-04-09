@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:23:13 by radler            #+#    #+#             */
-/*   Updated: 2019/04/04 09:40:10 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/05 12:19:56 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**read_line(char **environ, char ***history)
 
 	tmp = NULL;
 	tmp = tc_readline(*history);
-	if (tmp)
+	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
 	if (count_words(tmp) == 0)
 	{
@@ -52,11 +52,10 @@ char	**split_line(char *str)
 		if (str[end] && !ft_isaggr(&str[end]))
 		{
 			while (str[end] && !ft_issep(str[end]) &&
-				!ft_ischarsep(str[end]))
+				!ft_ischarsep(str[end]) && !ft_isquote(str[end]))
 				end++;
 		}
 		end += fill_sep_line(str, &cmd[i++], start, end);
-	//	i++;
 		while (str[end] && ft_issep(str[end]))
 			end++;
 	}
@@ -66,7 +65,12 @@ char	**split_line(char *str)
 
 int		fill_sep_line(char *str, char **command, int start, int end)
 {
-	if (str[end] && ft_isaggr(&str[end]))
+	if (str[end] && (str[start] == '\'' || str[start] == '\"'))
+	{
+		*command = get_quote(str, start);
+		return (get_next_quote(str, end + 1, 1) - end + 1);
+	}
+	else if (str[end] && ft_isaggr(&str[end]))
 		*command = fill_aggr(&str[end]);
 	else if ((*command = ft_strsub(str, start, end - start)))
 		return(0);
