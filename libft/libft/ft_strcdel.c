@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:25:18 by radler            #+#    #+#             */
-/*   Updated: 2019/04/04 10:32:44 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:37:06 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	*ft_strcdel(char *str, int i)
 {
 	char *tmp;
-	
+
 	if (i > (int)ft_strlen(str) - 1 || i < 0)
 		return (str);
 	if (i == 0 && str[1])

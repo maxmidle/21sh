@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_line.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/09 17:15:27 by radler            #+#    #+#             */
+/*   Updated: 2019/04/09 17:16:21 by radler           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "21sh.h"
 
 t_cmd	*handle_line(char **command)
 {
 	t_cmd	*comd;
 	t_cmd	*list;
-	int	ispipe;
-	int	i;
+	int		ispipe;
+	int		i;
 
 	comd = NULL;
 	i = 0;
@@ -33,15 +45,15 @@ t_cmd	*make_list(char **command, t_cmd *list, int ispipe)
 	int	i;
 
 	i = 0;
-	if(command[i])
+	if (command[i])
 	{
 		list->next = init_elem(command, list, ispipe);
 		list = list->next;
 	}
-	return (list);	
+	return (list);
 }
 
-int	get_next_sep(char **command, int i)
+int		get_next_sep(char **command, int i)
 {
 	while (command[i] && !ft_iscmdsep(command[i]))
 		i++;

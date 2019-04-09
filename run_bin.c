@@ -6,20 +6,20 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:19:12 by radler            #+#    #+#             */
-/*   Updated: 2019/04/04 09:02:24 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:00:06 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "21sh.h"
 
-int	run_bin(char **command, char **envorig, char **envexec)
+int	run_bin(char **command, char **envorig, char **envexec, int mode)
 {
 	char	**bpath;
 	int		y;
 
 	y = 0;
 	if (ft_strchr(command[0], '/') && !access(command[0], X_OK))
-		return (exec_bin(command[0], command, envexec));
+		return (exec_bin(command[0], command, envexec, mode));
 	if ((y = env_search(envorig, "PATH")) == -1)
 		return (0);
 	bpath = ft_strsplit(&envorig[y][5], ':');
@@ -30,7 +30,7 @@ int	run_bin(char **command, char **envorig, char **envexec)
 		ft_strconc(&bpath[y], command[0]);
 		if (!access(bpath[y], X_OK))
 		{
-			exec_bin(bpath[y], command, envexec);
+			exec_bin(bpath[y], command, envexec, mode);
 			ft_freetab(bpath);
 			return (1);
 		}
@@ -40,7 +40,7 @@ int	run_bin(char **command, char **envorig, char **envexec)
 	return (0);
 }
 
-int	exec_bin(char *cmd, char **command, char **envexec)
+int	exec_bin(char *cmd, char **command, char **envexec, int mode)
 {
 	pid_t	pid;
 
@@ -51,25 +51,7 @@ int	exec_bin(char *cmd, char **command, char **envexec)
 		exit(0);
 	}
 	wait(0);
+	if (mode)
+		ft_exit_proc(envexec);
 	return (1);
-}
-
-void	ft_kill(int prevpid, char **envorig)
-{
-	char **cmd;
-	pid_t pid;
-
-	pid = fork();
-	cmd = (char **)malloc(sizeof(char *) * 4);
-	cmd[0] = ft_strdup("pkill");
-	cmd[1] = ft_strdup("-P");
-	cmd[2] = ft_itoa(prevpid);
-	cmd[3] = NULL;
-	if (!pid)
-	{
-		execve("/usr/bin/pkill", cmd, envorig);
-		exit(0);
-	}
-	wait(0);
-	ft_freetab(cmd);
 }

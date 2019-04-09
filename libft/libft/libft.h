@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/14 15:26:26 by radler            #+#    #+#             */
-/*   Updated: 2019/04/04 10:29:47 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:41:49 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ft_strtrim(const char *s);
 char	**ft_strsplit(const char *s, char c);
 void	ft_print_words_tables(char **tabl);
 char	*ft_itoa(int n);
-int	ft_putchar(int c);
+int		ft_putchar(int c);
 void	ft_putstr(const char *s);
 void	ft_putendl(const char *s);
 void	ft_putnbr(int n);

@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 13:17:29 by radler            #+#    #+#             */
-/*   Updated: 2019/04/05 15:04:31 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 11:59:16 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,37 @@ typedef struct	s_line
 	int		stop;
 	int		hpos;
 	int		hsize;
+	int		ssize;
+	int		psize;
 }				t_line;
 
-char			*tc_readline(char **history);
+char			*tc_readline(char **history, int promptsize);
 t_line			*tc_handlechar(t_line *line, char buff[7]);
 t_line			*tc_handlectrl(t_line *line, char buff[7]);
 struct termios	term_init(void);
+t_line			*line_init(t_line *line, char **history, int promptsize);
 
-char			*tc_readhd(char *eof);
+char			*tc_readhd(char *eof, int promptsize);
 t_line			*tc_handlehdchar(t_line *line, char buff[7], char *eof);
 t_line			*tc_handlehdctrl(t_line *line, char buff[7], char *eof);
 
-char			*tc_putchar(t_line *line, char buff[7]);
+t_line			*tc_putchar(t_line *line, char buff[7]);
 t_line			*tc_delchar(t_line *line);
+t_line			*tc_upline(t_line *line);
+t_line			*tc_downline(t_line *line);
 
-int				tc_left(int cpos);
-int				tc_right(int cpos);
+int				tc_left(t_line *line);
+int				tc_right(t_line *line);
 int				tc_leftword(t_line *line);
 int				tc_rightword(t_line *line);
 
 int				tc_end(t_line *line);
 int				tc_home(t_line *line);
 
-char			*tc_paste(t_line *line);
+t_line			*tc_paste(t_line *line, int mode);
 char			*tc_copy(t_line *line);
+int				tc_goback(t_line *line, int i);
+void			tc_godown(t_line *line);
 
 t_line			*tc_stop(t_line *line);
 t_line			*tc_quit(t_line *line);

@@ -6,19 +6,19 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:23:13 by radler            #+#    #+#             */
-/*   Updated: 2019/04/05 12:19:56 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:36:01 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "21sh.h"
 
-char	**read_line(char **environ, char ***history)
+char	**read_line(char **environ, char ***history, int promptsize)
 {
 	char	**command;
 	char	*tmp;
 
 	tmp = NULL;
-	tmp = tc_readline(*history);
+	tmp = tc_readline(*history, promptsize);
 	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
 	if (count_words(tmp) == 0)
@@ -59,7 +59,7 @@ char	**split_line(char *str)
 		while (str[end] && ft_issep(str[end]))
 			end++;
 	}
-		cmd[i] = NULL;
+	cmd[i] = NULL;
 	return (cmd);
 }
 
@@ -73,7 +73,7 @@ int		fill_sep_line(char *str, char **command, int start, int end)
 	else if (str[end] && ft_isaggr(&str[end]))
 		*command = fill_aggr(&str[end]);
 	else if ((*command = ft_strsub(str, start, end - start)))
-		return(0);
+		return (0);
 	else if (str[end] && !ft_strncmp(&str[end], ">>", 2))
 		*command = ft_strdup(">>");
 	else if (str[end] && !ft_strncmp(&str[end], ">", 1))
@@ -99,7 +99,7 @@ char	*fill_aggr(char *str)
 	i += 2;
 	while (str[i] && (ft_isdigit(str[i]) || str[i] == '-'))
 		i++;
-	return (ft_strndup(str, i));	
+	return (ft_strndup(str, i));
 }
 
 int		count_words(char *str)
@@ -120,7 +120,7 @@ int		count_words(char *str)
 			wordct++;
 		}
 		if (str[i] && !ft_issep(str[i]))
-		{	
+		{
 			while (str[i] && !ft_issep(str[i]) &&
 				!ft_ischarsep(str[i]))
 				i++;

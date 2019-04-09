@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chain_list.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/09 17:05:22 by radler            #+#    #+#             */
+/*   Updated: 2019/04/09 17:13:43 by radler           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "21sh.h"
 
 t_cmd	*init_elem(char **command, t_cmd *previous, int ispipe)
@@ -25,8 +37,8 @@ t_cmd	*init_elem(char **command, t_cmd *previous, int ispipe)
 
 char	**init_cmd(char **command)
 {
-	int	size;
-	int	i;
+	int		size;
+	int		i;
 	char	**cmd;
 
 	size = 0;
@@ -34,8 +46,7 @@ char	**init_cmd(char **command)
 	cmd = NULL;
 	while (command[i] && !ft_iscmdsep(command[i]) && !ft_isredi(command[i]))
 		i++;
-	if (!(cmd = (char **)malloc(sizeof(char *) * (i + 1))))
-		return (NULL);
+	cmd = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (command[size + i] && !ft_iscmdsep(command[size + i]) &&
 		!ft_isredi(command[size + i]))
@@ -55,7 +66,7 @@ char	**init_cmd(char **command)
 
 char	**init_fout(char **command)
 {
-	int	i;
+	int		i;
 	char	**file_out;
 
 	i = 0;
@@ -93,7 +104,7 @@ char	*init_fin(char **command)
 	return (NULL);
 }
 
-int	init_saves(t_cmd *previous, int mode)
+int		init_saves(t_cmd *previous, int mode)
 {
 	if (mode == 0 && !previous)
 		return (dup(0));
@@ -107,5 +118,5 @@ int	init_saves(t_cmd *previous, int mode)
 		return (dup(2));
 	else if (mode == 2)
 		return (previous->save_err);
-	return(-1);
+	return (-1);
 }

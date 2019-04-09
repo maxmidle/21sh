@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 09:50:51 by radler            #+#    #+#             */
-/*   Updated: 2019/04/05 12:20:57 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:31:53 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ char	*get_quote(char *str, int start)
 	start++;
 	i = get_next_quote(str, start, 0);
 	size = i - start + 1;
-		size--;
+	size--;
 	if (size > 0)
-		cmd	 = ft_strsub(str, start, size);
+		cmd = ft_strsub(str, start, size);
 	else
 		cmd = ft_strnew(0);
 	if (!str[i])
@@ -50,13 +50,13 @@ char	*prompt_quote(char *str, int start)
 	{
 		free(tmp);
 		if (tquote == '\'')
-			ft_putstr("quote : \x1B[32m\'\x1B[33m ]>\x1B[0m");
+			ft_putstr("squote : \x1B[32m\'\x1B[33m ]>\x1B[0m");
 		if (tquote == '\"')
 			ft_putstr("dquote : \x1B[32m\"\x1B[33m ]>\x1B[0m");
-		tmp = tc_readline(NULL);
+		tmp = tc_readline(NULL, 13);
 		ft_strconc(&cmd, "\n");
 		ft_strconc(&cmd, tmp);
-	} 
+	}
 	free(tmp);
 	end = ft_strchr(cmd, tquote);
 	*end = '\0';
@@ -69,7 +69,7 @@ int		get_next_quote(char *str, int start, int mode)
 
 	i = start;
 	while (str[i] && !ft_isquote(str[i]))
-			i++;
+		i++;
 	if (!str[i] && mode)
 		i--;
 	return (i);

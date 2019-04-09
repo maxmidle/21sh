@@ -1,6 +1,6 @@
 NAME = 21sh
 
-INCLUDE = 21sh.h
+INCLUDE = sh.h
 
 FLAG = #-Wall -Wextra -Werror
 
@@ -11,9 +11,9 @@ TERMCAP = termcap/tc_readline.c termcap/tc_copypaste.c termcap/tc_stop.c \
 TERMOBJS = tc_readline.o tc_copypaste.o tc_stop.o tc_write.o tc_endhome.o \
 	tc_history.o tc_move.o tc_readhd.o
 
-SRCS = 21sh.c run_bin.c read_line.c tilde.c env.c env_verif.c cd.c echo.c \
+SRCS = sh.c run_bin.c read_line.c tilde.c env.c env_verif.c cd.c echo.c \
 	dollar.c run_cmd.c handle_line.c chain_list.c chain_list2.c ft_is.c \
-	run_proc_cmd.c file_fun.c quote.c
+	run_proc_cmd.c file_fun.c quote.c free_chain.c
 
 OBJS = $(SRCS:.c=.o) $(TERMOBJS)
 
@@ -21,7 +21,7 @@ LIB = -L libft -lft
 
 all: $(NAME)
 
-$(NAME): $(SRCS)
+$(NAME): $(SRCS) $(TERMCAP)
 	@make -C libft
 	@gcc $(FLAG) -c $(SRCS) $(TERMCAP)
 	@gcc $(FLAG) -o $(NAME) $(OBJS) $(LIB) -l termcap

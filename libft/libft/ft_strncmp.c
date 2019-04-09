@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/13 14:46:56 by radler            #+#    #+#             */
-/*   Updated: 2017/11/17 21:38:41 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:36:47 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	{
 		if (*ps1 != *ps2)
 			return (*ps1 - *ps2);
-			
 		i++;
 		ps1++;
 		ps2++;

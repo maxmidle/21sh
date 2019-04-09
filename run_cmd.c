@@ -6,13 +6,13 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:22:36 by radler            #+#    #+#             */
-/*   Updated: 2019/01/30 18:22:52 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/09 17:32:34 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "21sh.h"
 
-char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
+char	**run_cmd(t_cmd *comd, char **envorig, char **envexec, int mode)
 {
 	int	i;
 
@@ -22,7 +22,7 @@ char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 		i = ft_tablen(comd->cmd);
 	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i]))
 		envorig = run_builtins(comd->cmd, envorig);
-	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envorig, envexec))
+	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envorig, envexec, mode))
 	{
 		if (ft_strcmp(comd->cmd[i], "exit"))
 		{
@@ -73,8 +73,8 @@ int		ft_isbuiltins(char *command)
 {
 	if (!ft_strcmp(command, "echo"))
 		return (1);
-	if (!ft_strcmp(command, "unsetenv") ||	!ft_strcmp(command, "setenv") ||
-		 !ft_strcmp(command, "cd") || !ft_strcmp(command, "exit"))
+	if (!ft_strcmp(command, "unsetenv") || !ft_strcmp(command, "setenv")
+			|| !ft_strcmp(command, "cd") || !ft_strcmp(command, "exit"))
 		return (2);
 	return (0);
 }

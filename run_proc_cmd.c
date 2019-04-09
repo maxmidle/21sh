@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   run_proc_cmd.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/04/09 17:32:56 by radler            #+#    #+#             */
+/*   Updated: 2019/04/09 17:40:51 by radler           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "21sh.h"
 
 char	**run_full_cmd(t_cmd *comd, char **envorig)
 {
-	char **envexec;
-	t_cmd *list;
+	char	**envexec;
+	t_cmd	*list;
 
 	list = comd;
 	while (list)
@@ -18,7 +30,7 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 		{
 			create_file(list, envorig);
 			ft_dupfd(list);
-			envorig = run_cmd(list, envorig, envexec);
+			envorig = run_cmd(list, envorig, envexec, 0);
 		}
 		while (list->next && list->next->is_pipe)
 			list = list->next;
@@ -30,19 +42,17 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 
 void	run_proc(t_cmd *list, char **envorig, char **envexec, pid_t prevpid)
 {
-		ft_dupfd(list);
-		envorig = run_cmd(list, envorig, envexec);
-		if (prevpid != 0)
-			ft_kill(prevpid, envorig);
-		ft_freetab(envorig);
-		ft_freetab(envexec);
-		exit(0);
+	ft_dupfd(list);
+	envorig = run_cmd(list, envorig, envexec, 1);
+	if (prevpid != 0)
+		ft_kill(prevpid, envorig);
+	ft_exit_proc(envorig);
 }
 
-void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid)
+void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prepid)
 {
 	t_cmd	*list;
-	int	fd[2];
+	int		fd[2];
 	pid_t	pid;
 	pid_t	ctrlpid;
 
@@ -55,17 +65,18 @@ void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prevpid)
 	}
 	pid = fork();
 	if (!pid)
-		run_proc(list, envorig, envexec, prevpid);
+		run_proc(list, envorig, envexec, prepid);
 	if ((list->next && list->next->is_pipe))
 		close(list->fd_out);
 	if (list->next && list->next->is_pipe)
 		run_proc_cmd(list->next, envorig, envexec, pid);
-	waitpid(pid ,0, 0);
+	waitpid(pid, 0, 0);
 }
 
 char	**get_envexec(t_cmd *comd, char **envorig)
 {
 	char **envexec;
+
 	envexec = ft_tabdup(envorig);
 	if (comd && comd->cmd[0] && !ft_strcmp(comd->cmd[0], "env"))
 	{
