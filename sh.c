@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:14:34 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:53:47 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 18:17:24 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int		main(void)
 	char		**history;
 	t_cmd		*comd;
 
+	signal(SIGINT, sighandler);
 	envorig = ft_tabdup(environ);
 	history = NULL;
 	while (envorig)
@@ -49,12 +50,38 @@ int		ft_prompt(char **envorig)
 		i++;
 	if (envorig[i] && (tmp = ft_strrchr(envorig[i], '/') + 1))
 	{
-		ft_printf("|------------|\n-21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
-		return (11 + ft_strlen(tmp));
+		print_line_sep();
+		ft_printf("-21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
+		return (11 + strlen(tmp));
 	}
 	else
 	{
-		ft_printf("|------------|\n-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m\n");
+		print_line_sep();
+		ft_printf("-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
 		return (14);
 	}
+}
+
+void	print_line_sep(void)
+{
+	char	*term;
+	int		i;
+
+	i = 20;
+	term = getenv("TERM");
+	if (term)
+	{
+		tgetent(NULL, term);
+		i = tgetnum("co");
+	}
+	while (i > 0)
+	{
+		ft_putchar('_');
+		i--;
+	}
+	ft_putchar('\n');
+}
+
+void	sighandler(int sig)
+{
 }

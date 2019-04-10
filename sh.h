@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:52:55 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 17:26:13 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ char	*getpath(char *command, char *oldpwd, char **envorig);
 
 void	ft_echo(char **command);
 int		ft_prompt(char **envorig);
+void	print_line_sep(void);
+void	sighandler(int sig);
 
 char	**dollar(char **command, char **environ);
 char	*dollar_verif(char *command, char **environ);

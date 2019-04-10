@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:43:43 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 16:17:42 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 18:21:42 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 char			*tc_readline(char **history, int promptsize)
 {
 	struct termios	termorig;
-	t_line			*line;
 	char			buff[7];
 	char			*tmp;
+	t_line			*line;
 
 	line = NULL;
 	termorig = term_init();
@@ -43,7 +43,7 @@ char			*tc_readline(char **history, int promptsize)
 
 t_line			*tc_handlechar(t_line *line, char buff[7])
 {
-	if (buff[0] == '\x1b' || buff[0] == 4)
+	if (buff[0] == '\x1b' || buff[0] == 4 || buff[0] == 3)
 		line = tc_handlectrl(line, buff);
 	else if (buff[0] == 127)
 		line = tc_delchar(line);
@@ -73,7 +73,7 @@ t_line			*tc_handlectrl(t_line *line, char buff[7])
 		line->clipboard = tc_copy(line);
 	else if (!ft_strcmp(buff, "\x1b[5~"))
 		line = tc_paste(line, 1);
-	else if (!ft_strcmp(buff, "\x1b[3~"))
+	else if (buff[0] == 3)
 		line = tc_stop(line);
 	else if (buff[0] == 4 && !ft_strlen(line->str))
 		line = tc_quit(line);
@@ -88,7 +88,7 @@ struct termios	term_init(void)
 
 	tcgetattr(STDIN_FILENO, &term);
 	tcgetattr(STDIN_FILENO, &termorig);
-	term.c_lflag = ~(ECHO | ICANON);
+	term.c_lflag = ~(ECHO | ICANON | ISIG);
 	tcsetattr(STDIN_FILENO, TCSADRAIN, &term);
 	tgetent(NULL, getenv("TERM"));
 	return (termorig);
