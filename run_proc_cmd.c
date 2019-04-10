@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:32:56 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 17:40:51 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:57:11 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 char	**run_full_cmd(t_cmd *comd, char **envorig)
 {

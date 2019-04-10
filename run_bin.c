@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:19:12 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 17:00:06 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:58:46 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 int	run_bin(char **command, char **envorig, char **envexec, int mode)
 {
@@ -51,7 +51,5 @@ int	exec_bin(char *cmd, char **command, char **envexec, int mode)
 		exit(0);
 	}
 	wait(0);
-	if (mode)
-		ft_exit_proc(envexec);
 	return (1);
 }

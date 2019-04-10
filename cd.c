@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:18:53 by radler            #+#    #+#             */
-/*   Updated: 2019/01/30 18:20:26 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:54:59 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 void	ft_cd(char **command, char **envorig)
 {
@@ -23,7 +23,7 @@ void	ft_cd(char **command, char **envorig)
 		path = getpath(command[1], oldpwd, envorig);
 	else
 		path = tilde(ft_strdup("~"), envorig);
-	if (!lstat(path, &sb))
+	if (!stat(path, &sb))
 	{
 		if (S_ISDIR(sb.st_mode) || S_ISLNK(sb.st_mode))
 		{

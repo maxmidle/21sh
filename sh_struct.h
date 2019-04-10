@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   21sh_struct.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/30 18:17:08 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:55:11 by radler           ###   ########.fr       */
+/*   Created: 2019/04/09 17:38:50 by radler            #+#    #+#             */
+/*   Updated: 2019/04/09 17:39:26 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh.h"
+#ifndef SH_STRUCT_H
+# define SH_STRUCT_H
 
-void	ft_echo(char **command)
+typedef struct		s_cmd
 {
-	int	i;
+	char			**cmd;
+	int				fd_in;
+	int				fd_out;
+	int				fd_err;
+	int				save_in;
+	int				save_out;
+	int				save_err;
+	int				is_pipe;
+	char			*file_in;
+	char			**file_out;
+	char			*aggreg;
+	struct s_cmd	*next;
+	struct s_cmd	*prev;
+}					t_cmd;
 
-	i = 1;
-	if (command[1] && !ft_strcmp(command[1], "-n"))
-		i++;
-	while (command && command[i])
-	{
-		ft_putstr(command[i]);
-		if (command[i + 1])
-			ft_putchar(' ');
-		i++;
-	}
-	if (!command[1] || ft_strcmp(command[1], "-n"))
-		ft_putchar('\n');
-}
+#endif

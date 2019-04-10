@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:16:34 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 17:21:26 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:56:39 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 int		init_heredoc(char **command)
 {

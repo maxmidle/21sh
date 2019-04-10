@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:15:27 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 17:16:21 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:56:12 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 t_cmd	*handle_line(char **command)
 {

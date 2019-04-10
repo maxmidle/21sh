@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:27:31 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 17:30:00 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:57:25 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 int		handle_file(t_cmd *comd, char **envorig)
 {

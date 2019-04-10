@@ -6,14 +6,14 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 13:17:29 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 11:59:16 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:58:15 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TERMCAP_H
 # define TERMCAP_H
 # include "../libft/libft/libft.h"
-# include "../21sh.h"
+# include "../sh.h"
 # include <curses.h>
 # include <term.h>
 # include <termios.h>

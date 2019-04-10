@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:05:22 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 17:13:43 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:56:26 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 t_cmd	*init_elem(char **command, t_cmd *previous, int ispipe)
 {

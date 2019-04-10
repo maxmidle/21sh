@@ -6,11 +6,11 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:19:41 by radler            #+#    #+#             */
-/*   Updated: 2019/01/30 18:20:05 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/10 09:54:37 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "21sh.h"
+#include "sh.h"
 
 char	**env(char **command, char **envorig, char **envexec)
 {
