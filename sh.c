@@ -46,10 +46,11 @@ int		ft_prompt(char **envorig)
 	int		i;
 
 	i = 0;
-	while (envorig[i] && ft_strcmp(envorig[i], "PWD") != 61)
+	while (envorig && envorig[i] && ft_strcmp(envorig[i], "PWD") != 61)
 		i++;
-	if (envorig[i] && (tmp = ft_strrchr(envorig[i], '/') + 1))
+	if (envorig && envorig[i] && (tmp = ft_strrchr(envorig[i], '/')))
 	{
+		tmp++;
 		print_line_sep();
 		ft_printf("-21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
 		return (11 + strlen(tmp));
@@ -57,7 +58,7 @@ int		ft_prompt(char **envorig)
 	else
 	{
 		print_line_sep();
-		ft_printf("-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
+		ft_putstr("-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
 		return (14);
 	}
 }

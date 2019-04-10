@@ -16,13 +16,20 @@ char	**read_line(char **environ, char ***history, int promptsize)
 {
 	char	**command;
 	char	*tmp;
+	char	lastchar;
 
 	tmp = NULL;
 	tmp = tc_readline(*history, promptsize);
 	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
-	if (count_words(tmp) == 0)
+	lastchar = get_last_char(tmp);
+	if (count_words(tmp) == 0 || lastchar == '>' || lastchar == '<')
 	{
+		if (lastchar == '>' || lastchar == '<')
+		{
+			ft_putstr("-21sh: syntax error :\n\t");
+			ft_printf("toked requiered next to \'%c\'\n", lastchar);
+		}
 		ft_strdel(&tmp);
 		return (NULL);
 	}

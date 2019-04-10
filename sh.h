@@ -66,6 +66,7 @@ int		ft_isbuiltins(char *command);
 
 t_cmd	*handle_line(char **command);
 t_cmd	*make_list(char **command, t_cmd *list, int ispipe);
+char		get_last_char(char *str);
 int		get_next_sep(char **command, int i);
 
 int		handle_file(t_cmd *comd, char **envorig);

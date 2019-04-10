@@ -52,7 +52,21 @@ t_cmd	*make_list(char **command, t_cmd *list, int ispipe)
 	}
 	return (list);
 }
+char		get_last_char(char *str)
+{
+	int		i;
+	char	lastchar;
 
+	i = 0;
+	lastchar = '\0';
+	while(str[i])
+	{
+		if (!ft_issep(str[i]))
+			lastchar = str[i];
+		i++;
+	}
+	return (lastchar);
+}
 int		get_next_sep(char **command, int i)
 {
 	while (command[i] && !ft_iscmdsep(command[i]))
