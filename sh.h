@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 17:26:13 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/11 13:58:22 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		ft_isbuiltins(char *command);
 
 t_cmd	*handle_line(char **command);
 t_cmd	*make_list(char **command, t_cmd *list, int ispipe);
-char		get_last_char(char *str);
+char	get_last_char(char *str);
 int		get_next_sep(char **command, int i);
 
 int		handle_file(t_cmd *comd, char **envorig);

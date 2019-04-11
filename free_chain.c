@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:20:41 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:58:02 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/11 16:51:48 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	free_chain(t_cmd *comd)
 		list->prev = NULL;
 		list = list->next;
 		comd->next = NULL;
-		free(comd);
+		if (comd)
+			free(comd);
 		comd = list;
 	}
 }

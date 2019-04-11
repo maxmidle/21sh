@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 13:00:29 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 16:00:17 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/11 16:43:44 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char			*tc_readhd(char *eof, int promptsize)
 
 t_line			*tc_handlehdchar(t_line *line, char buff[7], char *eof)
 {
-	if (buff[0] == '\x1b' || buff[0] == 4)
+	if (buff[0] == '\x1b' || buff[0] == 4 || buff[0] == 3)
 		line = tc_handlehdctrl(line, buff, eof);
 	else if (buff[0] == 127)
 		line = tc_delchar(line);
@@ -75,6 +75,8 @@ t_line			*tc_handlehdctrl(t_line *line, char buff[7], char *eof)
 		line = tc_paste(line, 1);
 	else if (buff[0] == 4 && !ft_strlen(line->str))
 		line = tc_quithd(line, eof);
+	else if (buff[0] == 3)
+		line = tc_stop(line);
 	line = tc_history(line, buff);
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:15:27 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:56:12 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/11 14:00:14 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,15 @@ t_cmd	*make_list(char **command, t_cmd *list, int ispipe)
 	}
 	return (list);
 }
-char		get_last_char(char *str)
+
+char	get_last_char(char *str)
 {
 	int		i;
 	char	lastchar;
 
 	i = 0;
 	lastchar = '\0';
-	while(str[i])
+	while (str[i])
 	{
 		if (!ft_issep(str[i]))
 			lastchar = str[i];
@@ -67,6 +68,7 @@ char		get_last_char(char *str)
 	}
 	return (lastchar);
 }
+
 int		get_next_sep(char **command, int i)
 {
 	while (command[i] && !ft_iscmdsep(command[i]))

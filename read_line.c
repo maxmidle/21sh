@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:23:13 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:54:05 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/11 16:13:46 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,19 @@ char	**read_line(char **environ, char ***history, int promptsize)
 {
 	char	**command;
 	char	*tmp;
-	char	lastchar;
+	char	lc;
 
 	tmp = NULL;
 	tmp = tc_readline(*history, promptsize);
 	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
-	lastchar = get_last_char(tmp);
-	if (count_words(tmp) == 0 || lastchar == '>' || lastchar == '<')
+	lc = get_last_char(tmp);
+	if (!count_words(tmp) || lc == '>' || lc == '<' || lc == '|' || lc == ';')
 	{
-		if (lastchar == '>' || lastchar == '<')
+		if (lc == '>' || lc == '<' || lc == '|' || lc == ';')
 		{
 			ft_putstr("-21sh: syntax error :\n\t");
-			ft_printf("toked requiered next to \'%c\'\n", lastchar);
+			ft_printf("toked requiered next to \'%c\'\n", lc);
 		}
 		ft_strdel(&tmp);
 		return (NULL);
