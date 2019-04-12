@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 09:50:51 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:57:49 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/12 07:21:08 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,33 @@ int		get_next_quote(char *str, int start, int mode)
 	if (!str[i] && mode)
 		i--;
 	return (i);
+}
+
+int		bad_quoting(char *str)
+{
+	int i;
+
+	i = 0;
+	if (!str)
+		return (0);
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+		{
+			if (i > 0 && !ft_issep(str[i - 1]))
+			{
+				write(2, "-21sh: syntax error :\n\t", 23);
+				write(2, "space requiered next to ", 24);
+				if (str[i] == '\'')
+					write(2, "\'", 1);
+				else
+					write(2, "\"", 1);
+				write(2, "\n", 1);
+				return (1);
+			}
+			return (0);
+		}
+		i++;
+	}
+	return (0);
 }

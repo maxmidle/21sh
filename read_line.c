@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:23:13 by radler            #+#    #+#             */
-/*   Updated: 2019/04/11 16:13:46 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/12 07:16:37 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ char	**read_line(char **environ, char ***history, int promptsize)
 	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
 	lc = get_last_char(tmp);
-	if (!count_words(tmp) || lc == '>' || lc == '<' || lc == '|' || lc == ';')
+	if (!count_words(tmp) || ft_ischarsep(lc) || bad_quoting(tmp))
 	{
-		if (lc == '>' || lc == '<' || lc == '|' || lc == ';')
+		if (ft_ischarsep(lc))
 		{
 			ft_putstr("-21sh: syntax error :\n\t");
 			ft_printf("toked requiered next to \'%c\'\n", lc);

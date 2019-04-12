@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/11 13:58:22 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/12 07:17:08 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,4 +104,5 @@ char	**get_envexec(t_cmd *comd, char **envorig);
 char	*get_quote(char *str, int start);
 char	*prompt_quote(char *str, int start);
 int		get_next_quote(char *str, int start, int mode);
+int		bad_quoting(char *str);
 #endif
