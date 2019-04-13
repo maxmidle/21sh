@@ -48,13 +48,13 @@ char	**init_cmd(char **command)
 		i++;
 	cmd = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (command[size + i] && !ft_iscmdsep(command[size + i]) &&
-		!ft_isredi(command[size + i]))
+	while (command[size + i] && !ft_iscmdsep(command[size + i])
+		&& !ft_isredi(command[size + i]))
 	{
 		if (ft_isaggr(command[size + i]))
 			i++;
-		if (command[size + i] && !ft_iscmdsep(command[size + i]) &&
-			!ft_isredi(command[size + i]))
+		if (command[size + i] && !ft_iscmdsep(command[size + i])
+			&& !ft_isredi(command[size + i]))
 		{
 			cmd[size] = ft_strdup(command[size + i]);
 			size++;
@@ -70,8 +70,8 @@ char	**init_fout(char **command)
 	char	**file_out;
 
 	i = 0;
-	while (command[i] && !ft_iscmdsep(command[i]) &&
-		ft_isredi(command[i]) != 1)
+	while (command[i] && !ft_iscmdsep(command[i])
+		&& ft_isredi(command[i]) != 1)
 		i++;
 	if (command[i] && ft_isredi(command[i]) == 1)
 	{
@@ -91,8 +91,8 @@ char	*init_fin(char **command)
 	int	i;
 
 	i = 0;
-	while (command[i] && !ft_iscmdsep(command[i]) &&
-		ft_isredi(command[i]) != 2)
+	while (command[i] && !ft_iscmdsep(command[i])
+		&& ft_isredi(command[i]) != 2)
 		i++;
 	if (command[i] && ft_isredi(command[i]) == 2)
 	{

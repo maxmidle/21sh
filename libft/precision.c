@@ -41,9 +41,9 @@ char	*handleprec(int prec, char *argform, char *str)
 		free(str);
 		str = buff;
 	}
-	if (last == 'd' || last == 'D' || last == 'i' || last == 'o' ||
-		last == 'O' || last == 'u' || last == 'U' || last == 'x' ||
-		last == 'X' || last == 'p' || last == 'b')
+	if (last == 'd' || last == 'D' || last == 'i' || last == 'o'
+		|| last == 'O' || last == 'u' || last == 'U' || last == 'x'
+		|| last == 'X' || last == 'p' || last == 'b')
 	{
 		if (str[0] == '-')
 			str = handlenegprec(prec, str);

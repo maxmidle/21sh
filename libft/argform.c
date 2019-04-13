@@ -19,8 +19,8 @@ char	*getargform(const char *format)
 
 	i = 1;
 	argform = NULL;
-	while (format[i] && (!(ft_isalpha(format[i])) || ft_isconv(format[i])) &&
-			format[i] != '%')
+	while (format[i] && (!(ft_isalpha(format[i])) || ft_isconv(format[i]))
+			&& format[i] != '%')
 		i++;
 	if (!ft_isarg(format[i]) && format[i] != '%')
 	{

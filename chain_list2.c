@@ -17,8 +17,8 @@ int		init_heredoc(char **command)
 	int	i;
 
 	i = 0;
-	while (command[i] && !ft_iscmdsep(command[i]) &&
-		ft_isredi(command[i]) != 2)
+	while (command[i] && !ft_iscmdsep(command[i])
+		&& ft_isredi(command[i]) != 2)
 		i++;
 	if (command[i] && ft_isredi(command[i]) == 2)
 	{
@@ -69,8 +69,8 @@ char	*init_aggreg(char **command)
 			infile = 1;
 		if (ft_isaggr(command[i]))
 		{
-			if (infile == 0 ||
-				command[i][ft_strlen(command[i]) - 1] != '1')
+			if (infile == 0
+				|| command[i][ft_strlen(command[i]) - 1] != '1')
 				return (ft_strdup(command[i]));
 			else
 			{

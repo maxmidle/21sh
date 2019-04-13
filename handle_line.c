@@ -75,3 +75,31 @@ int		get_next_sep(char **command, int i)
 		i++;
 	return (i);
 }
+
+int		bad_sep(char *str)
+{
+	char	lc;
+	int	fc;
+
+	if (!str)
+		return (0);
+	fc = 0;
+	lc = get_last_char(str);
+	if(ft_ischarsep(lc))
+	{
+		write(2, "-21sh: syntax error:\n\ttoken requiered next to \'", 47);
+		write(2, &lc, 1);
+		write(2, "\'\n", 2);
+		return (1);
+	}
+	while (ft_issep(str[fc]))
+		fc++;
+	if(ft_ischarsep(str[fc]))
+	{
+		write(2, "-21sh: syntax error:\n\ttoken requiered before \'", 46);
+		write(2, &str[fc], 1);
+		write(2, "\'\n", 2);
+		return (1);
+	}
+	return (0);
+}

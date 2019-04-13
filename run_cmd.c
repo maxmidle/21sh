@@ -12,7 +12,7 @@
 
 #include "sh.h"
 
-char	**run_cmd(t_cmd *comd, char **envorig, char **envexec, int mode)
+char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 {
 	int	i;
 
@@ -20,9 +20,10 @@ char	**run_cmd(t_cmd *comd, char **envorig, char **envexec, int mode)
 		return (exit_runcmd(envorig, 0));
 	if ((i = env_verif(comd->cmd, 0)) == -1)
 		i = ft_tablen(comd->cmd);
-	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i]))
+	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i])
+		&& ft_strcmp(comd->cmd[i], "exit"))
 		envorig = run_builtins(comd->cmd, envorig);
-	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envorig, envexec, mode))
+	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envorig, envexec))
 	{
 		if (ft_strcmp(comd->cmd[i], "exit"))
 		{

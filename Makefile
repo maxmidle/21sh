@@ -2,7 +2,7 @@ NAME = 21sh
 
 INCLUDE = sh.h
 
-FLAG = #-Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror
 
 TERMCAP = termcap/tc_readline.c termcap/tc_copypaste.c termcap/tc_stop.c \
 	termcap/tc_write.c termcap/tc_endhome.c termcap/tc_history.c \

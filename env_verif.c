@@ -49,8 +49,8 @@ int	env_param_error(char **cmd, int i)
 		return (1);
 	while (cmd[i][y])
 	{
-		if ((cmd[i][y] != 'i' && cmd[i][y] != 'u') ||
-			(cmd[i][y] == 'u' && !cmd[i + 1]))
+		if ((cmd[i][y] != 'i' && cmd[i][y] != 'u')
+			|| (cmd[i][y] == 'u' && !cmd[i + 1]))
 			return (y);
 		y++;
 	}

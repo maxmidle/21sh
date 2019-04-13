@@ -18,18 +18,12 @@ char	**read_line(char **environ, char ***history, int promptsize)
 	char	*tmp;
 	char	lc;
 
-	tmp = NULL;
 	tmp = tc_readline(*history, promptsize);
 	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
 	lc = get_last_char(tmp);
-	if (!count_words(tmp) || ft_ischarsep(lc) || bad_quoting(tmp))
+	if (!count_words(tmp) || bad_sep(tmp) || bad_quoting(tmp))
 	{
-		if (ft_ischarsep(lc))
-		{
-			ft_putstr("-21sh: syntax error :\n\t");
-			ft_printf("toked requiered next to \'%c\'\n", lc);
-		}
 		ft_strdel(&tmp);
 		return (NULL);
 	}
@@ -58,8 +52,8 @@ char	**split_line(char *str)
 		start = end;
 		if (str[end] && !ft_isaggr(&str[end]))
 		{
-			while (str[end] && !ft_issep(str[end]) &&
-				!ft_ischarsep(str[end]) && !ft_isquote(str[end]))
+			while (str[end] && !ft_issep(str[end])
+				&& !ft_ischarsep(str[end]) && !ft_isquote(str[end]))
 				end++;
 		}
 		end += fill_sep_line(str, &cmd[i++], start, end);
@@ -128,8 +122,8 @@ int		count_words(char *str)
 		}
 		if (str[i] && !ft_issep(str[i]))
 		{
-			while (str[i] && !ft_issep(str[i]) &&
-				!ft_ischarsep(str[i]))
+			while (str[i] && !ft_issep(str[i])
+				&& !ft_ischarsep(str[i]))
 				i++;
 			wordct++;
 		}

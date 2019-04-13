@@ -39,9 +39,11 @@ char	*dollar_verif(char *command, char **environ)
 
 	i = 0;
 	var = NULL;
-	while (command[i] != '$')
+	while (command[i] && command[i] != '$')
 		i++;
 	i++;
+	if (!command[i] || command[i] == '$')
+		return(NULL);
 	y = i;
 	while (command[y] && ft_isalpha(command[y]))
 		y++;

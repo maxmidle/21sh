@@ -67,13 +67,18 @@ char	*getpath(char *command, char *oldpwd, char **envorig)
 
 void	cd_error(int mode, char *command)
 {
+	int error;
+
+	error = errno;
 	write(2, "-21sh: cd: ", 11);
 	write(2, command, ft_strlen(command));
-	if (mode == 1)
+	if (error == ELOOP)
+		write(2, ": Too many levels of symbolic links\n", 36);
+	else if (mode == 1)
 		write(2, ": Permission denied\n", 20);
-	if (mode == 2)
+	else if (mode == 2)
 		write(2, ": Not a directory\n", 18);
-	if (mode == 3)
+	else if (mode == 3)
 		write(2, ": No such file or directory\n", 28);
 }
 

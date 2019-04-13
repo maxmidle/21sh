@@ -34,8 +34,8 @@ char	*argtype_long(char *argtype, va_list ap)
 
 	last = ft_strlen(argtype) - 1;
 	argu = va_arg(ap, long);
-	if (ft_strstr(argtype, "ld") || ft_strstr(argtype, "li") ||
-		argtype[last] == 'D')
+	if (ft_strstr(argtype, "ld") || ft_strstr(argtype, "li")
+		|| argtype[last] == 'D')
 	{
 		if (argu >= 0)
 			return (ft_itoa_base((unsigned long long)argu, 10));
@@ -50,8 +50,8 @@ char	*argtype_longlong(char *argtype, va_list ap)
 	long long argu;
 
 	argu = va_arg(ap, long long);
-	if (ft_strstr(argtype, "lli") || ft_strstr(argtype, "lld") ||
-			ft_strstr(argtype, "zi") || ft_strstr(argtype, "zd"))
+	if (ft_strstr(argtype, "lli") || ft_strstr(argtype, "lld")
+			|| ft_strstr(argtype, "zi") || ft_strstr(argtype, "zd"))
 	{
 		if (argu >= 0)
 			return (ft_itoa_base((unsigned long long)argu, 10));

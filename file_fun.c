@@ -12,73 +12,68 @@
 
 #include "sh.h"
 
-int		handle_file(t_cmd *comd, char **envorig)
+int		handle_file(t_cmd *comd)
 {
-	pid_t	pid;
 	int		fd;
-	char	**arg;
 	char	buff[50];
 
-	pid = 1;
-	arg = malloc(sizeof(char *) * 3);
-	arg[0] = ft_strdup("/bin/rm");
-	arg[1] = ft_strdup(comd->file_out[0]);
-	arg[2] = NULL;
-	if (!ft_strcmp(comd->file_out[1], ">") && !access(comd->file_out[0], F_OK))
-		pid = fork();
-	if (!pid)
+	fd = 0;
+	if (!ft_strcmp(comd->file_out[1], ">"))
 	{
-		run_bin(arg, envorig, envorig, 1);
-		ft_exit_proc(envorig);
-	}
-	wait(0);
-	ft_freetab(arg);
-	fd = open(comd->file_out[0], O_RDWR | O_CREAT);
-	perm_file(comd, envorig);
-	if (!ft_strcmp(comd->file_out[1], ">>"))
+		fd = open(comd->file_out[0], O_RDWR | O_CREAT | O_TRUNC, 0644);
+		if (access(comd->file_out[0], W_OK))
+			return (file_error(comd->file_out[0]));
+	}	
+	else if (!ft_strcmp(comd->file_out[1], ">>"))
+	{	
+		fd = open(comd->file_out[0], O_RDWR | O_CREAT, 0644);
+		if (access(comd->file_out[0], W_OK))
+			return (file_error(comd->file_out[0]));
 		while (read(fd, buff, 50))
-			pid++;
+			fd = fd + 0;
+	}
 	return (fd);
 }
 
-void	create_file(t_cmd *comd, char **envorig)
+int	create_file(t_cmd *comd)
 {
 	t_cmd *list;
 
 	list = comd;
+	if (list->file_in && access(list->file_in, R_OK))
+		return (file_error(list->file_in));
 	if (list->file_out)
-		list->fd_out = handle_file(list, envorig);
+		list->fd_out = handle_file(list);
+	if (!list->fd_out)
+		return (0);
 	list = list->next;
 	while (list && list->is_pipe)
 	{
+		if (list->file_in && access(list->file_in, R_OK))
+			return (file_error(list->file_in));
 		if (list->file_out)
-			list->fd_out = handle_file(list, envorig);
+			list->fd_out = handle_file(list);
+		if (!list->fd_out)
+			return (0);
 		list = list->next;
 	}
+	return (1);
 }
 
-void	perm_file(t_cmd *comd, char **envorig)
+
+int	file_error(char *filename)
 {
-	char	**arg;
-	pid_t	pid;
+	int error;
 
-	pid = 1;
-	arg = malloc(sizeof(char *) * 4);
-	arg[0] = ft_strdup("/bin/chmod");
-	arg[1] = ft_strdup("644");
-	arg[2] = ft_strdup(comd->file_out[0]);
-	arg[3] = NULL;
-	if (!access(comd->file_out[0], F_OK))
-		pid = fork();
-	if (!pid)
-	{
-		run_bin(arg, envorig, envorig, 1);
-		ft_exit_proc(envorig);
-	}
-	wait(0);
-	ft_freetab(arg);
+	error = errno;
+	write (2, "-21sh: ", 7);
+	write (2, filename, ft_strlen(filename));
+	if (errno == EACCES)
+		write (2, ": Permission denied\n", 20);
+	if (errno == ENOENT)
+		write (2, ": No such file or directory\n", 28);
+	return (0);
 }
-
 void	ft_kill(int prevpid, char **envorig)
 {
 	char	**cmd;

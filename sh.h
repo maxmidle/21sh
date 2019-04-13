@@ -19,12 +19,13 @@
 # include <signal.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <errno.h>
 # include "libft/ft_printf.h"
 # include "termcap/termcap.h"
 # include "sh_struct.h"
 
-int		run_bin(char **command, char **envorig, char **envexec, int mode);
-int		exec_bin(char *cmd, char **command, char **envexec, int mode);
+int		run_bin(char **command, char **envorig, char **envexec);
+int		exec_bin(char *cmd, char **command, char **envexec);
 
 char	**read_line(char **environ, char ***history, int promptsize);
 char	**split_line(char *str);
@@ -59,7 +60,7 @@ char	**dollar(char **command, char **environ);
 char	*dollar_verif(char *command, char **environ);
 char	*dollar_fill(char *command, char *environ);
 
-char	**run_cmd(t_cmd *comd, char **envorig, char **envexec, int mode);
+char	**run_cmd(t_cmd *comd, char **envorig, char **envexec);
 char	**run_builtins(char **command, char **envorig);
 char	**exit_runcmd(char **envorig, int mode);
 int		ft_isbuiltins(char *command);
@@ -68,10 +69,11 @@ t_cmd	*handle_line(char **command);
 t_cmd	*make_list(char **command, t_cmd *list, int ispipe);
 char	get_last_char(char *str);
 int		get_next_sep(char **command, int i);
+int		bad_sep(char *str);
 
-int		handle_file(t_cmd *comd, char **envorig);
-void	create_file(t_cmd *comd, char **envorig);
-void	perm_file(t_cmd *comd, char **envorig);
+int		handle_file(t_cmd *comd);
+int		create_file(t_cmd *comd);
+int		file_error(char *filename);
 void	ft_kill(int prevpid, char **envorig);
 void	ft_exit_proc(char **envorig);
 

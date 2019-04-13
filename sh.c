@@ -27,8 +27,8 @@ int		main(void)
 	while (envorig)
 	{
 		comd = handle_line(read_line(envorig, &history, ft_prompt(envorig)));
-		if (comd && comd->cmd && comd->cmd[0] &&
-			!ft_strcmp(comd->cmd[0], "exit"))
+		if (comd && comd->cmd && comd->cmd[0]
+			&& !ft_strcmp(comd->cmd[0], "exit"))
 		{
 			ft_freetab(envorig);
 			envorig = NULL;
@@ -38,6 +38,7 @@ int		main(void)
 		free_chain(comd);
 	}
 	ft_freetab(history);
+	exit(0);
 	return (0);
 }
 
@@ -86,4 +87,5 @@ void	print_line_sep(void)
 
 void	sighandler(int sig)
 {
+	sig++;
 }

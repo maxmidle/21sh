@@ -18,19 +18,19 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 	t_cmd	*list;
 
 	list = comd;
-	while (list)
+	while (list && envorig)
 	{
 		envexec = get_envexec(list, envorig);
 		if (ft_isbuiltins(list->cmd[0]) != 2)
 		{
-			create_file(list, envorig);
-			run_proc_cmd(list, envorig, envexec, 0);
+			if (create_file(list))
+				run_proc_cmd(list, envorig, envexec, 0);
 		}
 		else
 		{
-			create_file(list, envorig);
 			ft_dupfd(list);
-			envorig = run_cmd(list, envorig, envexec, 0);
+			if (create_file(list))
+				envorig = run_cmd(list, envorig, envexec);
 		}
 		while (list->next && list->next->is_pipe)
 			list = list->next;
@@ -43,7 +43,7 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 void	run_proc(t_cmd *list, char **envorig, char **envexec, pid_t prevpid)
 {
 	ft_dupfd(list);
-	envorig = run_cmd(list, envorig, envexec, 1);
+	envorig = run_cmd(list, envorig, envexec);
 	if (prevpid != 0)
 		ft_kill(prevpid, envorig);
 	ft_exit_proc(envorig);
@@ -54,7 +54,6 @@ void	run_proc_cmd(t_cmd *comd, char **envorig, char **envexec, pid_t prepid)
 	t_cmd	*list;
 	int		fd[2];
 	pid_t	pid;
-	pid_t	ctrlpid;
 
 	list = comd;
 	if (list->next && list->next->is_pipe)
