@@ -23,8 +23,8 @@ int	ft_atoi(const char *str)
 	nb = 0;
 	while (ft_issep(str[i]))
 		i++;
-	if ((str[i] == '-' || str[i] == '+') &&
-			(str[i + 1] <= '9' && str[i + 1] >= '0'))
+	if ((str[i] == '-' || str[i] == '+')
+			&& (str[i + 1] <= '9' && str[i + 1] >= '0'))
 	{
 		if (str[i] == '-')
 			neg = -1;
