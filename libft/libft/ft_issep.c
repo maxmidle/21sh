@@ -14,8 +14,8 @@
 
 int		ft_issep(char c)
 {
-	if (c == '\n' || c == '\t' || c == ' ' ||
-			c == '\v' || c == '\f' || c == '\r')
+	if (c == '\n' || c == '\t' || c == ' '
+			|| c == '\v' || c == '\f' || c == '\r')
 		return (1);
 	return (0);
 }
