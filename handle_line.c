@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:15:27 by radler            #+#    #+#             */
-/*   Updated: 2019/04/11 14:00:14 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/15 08:50:41 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,13 +79,13 @@ int		get_next_sep(char **command, int i)
 int		bad_sep(char *str)
 {
 	char	lc;
-	int	fc;
+	int		fc;
 
 	if (!str)
 		return (0);
 	fc = 0;
 	lc = get_last_char(str);
-	if(ft_ischarsep(lc))
+	if (ft_ischarsep(lc))
 	{
 		write(2, "-21sh: syntax error:\n\ttoken requiered next to \'", 47);
 		write(2, &lc, 1);
@@ -94,7 +94,7 @@ int		bad_sep(char *str)
 	}
 	while (ft_issep(str[fc]))
 		fc++;
-	if(ft_ischarsep(str[fc]))
+	if (ft_ischarsep(str[fc]))
 	{
 		write(2, "-21sh: syntax error:\n\ttoken requiered before \'", 46);
 		write(2, &str[fc], 1);

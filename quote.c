@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 09:50:51 by radler            #+#    #+#             */
-/*   Updated: 2019/04/12 07:21:08 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/15 09:02:23 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ int		get_next_quote(char *str, int start, int mode)
 	int		i;
 	char	tquote;
 
-	tquote = str[start -1];
+	tquote = str[start - 1];
 	i = start;
-	while (str[i] && str[i] != str[start -1])
+	while (str[i] && str[i] != str[start - 1])
 		i++;
 	if (!str[i] && mode)
 		i--;
@@ -82,9 +82,7 @@ int		bad_quoting(char *str)
 	char	tquote;
 
 	i = 0;
-	if (!str)
-		return (0);
-	while (str[i])
+	while (str && str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
 		{
@@ -93,7 +91,7 @@ int		bad_quoting(char *str)
 			{
 				write(2, "-21sh: syntax error :\n\t", 23);
 				write(2, "space requiered before ", 24);
-					write(2, &str[i], 1);
+				write(2, &str[i], 1);
 				write(2, "\n", 1);
 				return (1);
 			}

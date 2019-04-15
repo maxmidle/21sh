@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:27:31 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:57:25 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/15 09:01:01 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int		handle_file(t_cmd *comd)
 		fd = open(comd->file_out[0], O_RDWR | O_CREAT | O_TRUNC, 0644);
 		if (access(comd->file_out[0], W_OK))
 			return (file_error(comd->file_out[0]));
-	}	
+	}
 	else if (!ft_strcmp(comd->file_out[1], ">>"))
-	{	
+	{
 		fd = open(comd->file_out[0], O_RDWR | O_CREAT, 0644);
 		if (access(comd->file_out[0], W_OK))
 			return (file_error(comd->file_out[0]));
@@ -35,7 +35,7 @@ int		handle_file(t_cmd *comd)
 	return (fd);
 }
 
-int	create_file(t_cmd *comd)
+int		create_file(t_cmd *comd)
 {
 	t_cmd *list;
 
@@ -60,20 +60,20 @@ int	create_file(t_cmd *comd)
 	return (1);
 }
 
-
-int	file_error(char *filename)
+int		file_error(char *filename)
 {
 	int error;
 
 	error = errno;
-	write (2, "-21sh: ", 7);
-	write (2, filename, ft_strlen(filename));
+	write(2, "-21sh: ", 7);
+	write(2, filename, ft_strlen(filename));
 	if (errno == EACCES)
-		write (2, ": Permission denied\n", 20);
+		write(2, ": Permission denied\n", 20);
 	if (errno == ENOENT)
-		write (2, ": No such file or directory\n", 28);
+		write(2, ": No such file or directory\n", 28);
 	return (0);
 }
+
 void	ft_kill(int prevpid, char **envorig)
 {
 	char	**cmd;

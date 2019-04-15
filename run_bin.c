@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:19:12 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:58:46 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/15 09:10:30 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	exec_bin(char *cmd, char **command, char **envexec)
 	if (!pid)
 	{
 		execve(cmd, command, envexec);
-		exit(0);
+		ft_exit_proc(envexec);
 	}
 	wait(0);
 	return (1);

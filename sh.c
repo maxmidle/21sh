@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:14:34 by radler            #+#    #+#             */
-/*   Updated: 2019/04/11 17:09:09 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/15 08:56:40 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,8 @@ int		main(void)
 	char		**history;
 	t_cmd		*comd;
 
-	if (!isatty(0) || !isatty(1) || !isatty(2))
+	if (!sig_init())
 		return (0);
-	signal(SIGINT, sighandler);
 	envorig = ft_tabdup(environ);
 	history = NULL;
 	while (envorig)
@@ -63,6 +62,14 @@ int		ft_prompt(char **envorig)
 		ft_putstr("-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
 		return (14);
 	}
+}
+
+int		sig_init(void)
+{
+	if (!isatty(0) || !isatty(1) || !isatty(2))
+		return (0);
+	signal(SIGINT, sighandler);
+	return (1);
 }
 
 void	print_line_sep(void)

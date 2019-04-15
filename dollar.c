@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:17:51 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:55:40 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/15 08:49:49 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*dollar_verif(char *command, char **environ)
 		i++;
 	i++;
 	if (!command[i] || command[i] == '$')
-		return(NULL);
+		return (NULL);
 	y = i;
 	while (command[y] && ft_isalpha(command[y]))
 		y++;
