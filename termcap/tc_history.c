@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 11:51:35 by radler            #+#    #+#             */
-/*   Updated: 2019/04/09 11:52:48 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/16 14:39:34 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,9 @@ char	**hist_add(char ***history, char *str)
 
 	i = 0;
 	y = 0;
+	if (is_empty_str(str) || (*history && **history
+				&& !ft_strcmp(str, **history)))
+		return (*history);
 	tmp = (char **)malloc(sizeof(char *) * (ft_tablen(*history) + 2));
 	tmp[i] = ft_strdup(str);
 	i++;
@@ -89,4 +92,18 @@ char	**hist_add(char ***history, char *str)
 	if (history[0])
 		ft_freetab(*history);
 	return (tmp);
+}
+
+int		is_empty_str(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_issep(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

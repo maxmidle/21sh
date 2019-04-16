@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/15 08:59:30 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/16 13:36:31 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_cmd	*handle_line(char **command);
 t_cmd	*make_list(char **command, t_cmd *list, int ispipe);
 char	get_last_char(char *str);
 int		get_next_sep(char **command, int i);
-int		bad_sep(char *str);
 
 int		handle_file(t_cmd *comd);
 int		create_file(t_cmd *comd);
@@ -109,4 +108,10 @@ char	*get_quote(char *str, int start);
 char	*prompt_quote(char *str, int start);
 int		get_next_quote(char *str, int start, int mode);
 int		bad_quoting(char *str);
+
+void	get_last_pipe(char **str);
+int		bad_sep(char *str);
+int		bad_redi(char *str);
+int		bad_redi_form(char *str);
+int		print_bad_redi(void);
 #endif

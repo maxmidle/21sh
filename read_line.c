@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:23:13 by radler            #+#    #+#             */
-/*   Updated: 2019/04/12 07:16:37 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/16 14:01:28 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,18 @@ char	**read_line(char **environ, char ***history, int promptsize)
 {
 	char	**command;
 	char	*tmp;
-	char	lc;
 
 	tmp = tc_readline(*history, promptsize);
 	if (tmp && !ft_strchr(tmp, '\n'))
 		*history = hist_add(history, tmp);
-	lc = get_last_char(tmp);
-	if (!count_words(tmp) || bad_sep(tmp) || bad_quoting(tmp))
+	if (!count_words(tmp) || bad_sep(tmp) || bad_quoting(tmp)
+			|| bad_redi(tmp) || bad_redi_form(tmp))
 	{
 		ft_strdel(&tmp);
 		return (NULL);
 	}
+	if (get_last_char(tmp) == '|')
+		get_last_pipe(&tmp);
 	if (ft_strstr(tmp, " ~"))
 		tmp = tilde(tmp, environ);
 	command = split_line(tmp);

@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:14:34 by radler            #+#    #+#             */
-/*   Updated: 2019/04/15 08:56:40 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/16 10:42:56 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ int		ft_prompt(char **envorig)
 	{
 		tmp++;
 		print_line_sep();
-		ft_printf("-21sh: \x1B[34m%s/\x1B[33m )>\x1B[0m", tmp);
+		ft_printf("-21sh: \x1B[34;1m%s/\x1B[0m\x1B[33m )>\x1B[0m", tmp);
 		return (11 + strlen(tmp));
 	}
 	else
 	{
 		print_line_sep();
-		ft_putstr("-21sh: \x1B[34mPWD/\x1B[33m )>\x1B[0m");
+		ft_putstr("-21sh: \x1B[34;1mPWD/\x1B[0m\x1B[33m )>\x1B[0m");
 		return (14);
 	}
 }

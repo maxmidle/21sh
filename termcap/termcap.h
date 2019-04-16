@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 13:17:29 by radler            #+#    #+#             */
-/*   Updated: 2019/04/11 16:43:52 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/16 14:07:52 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ t_line			*tc_history(t_line *line, char buff[7]);
 t_line			*tc_up(t_line *line);
 t_line			*tc_down(t_line *line);
 char			**hist_add(char ***history, char *str);
+int				is_empty_str(char *str);
 
 #endif
