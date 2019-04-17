@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/05 09:50:51 by radler            #+#    #+#             */
-/*   Updated: 2019/04/16 14:54:39 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/17 11:52:17 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	get_last_pipe(char **str)
 	tmp = tc_readline(NULL, 10 + size);
 	ft_strconc(str, tmp);
 	free(tmp);
+	if (get_last_char(*str) == '|')
+		get_last_pipe(str);
 }
 
 int		bad_sep(char *str)

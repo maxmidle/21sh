@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/16 13:36:31 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/17 15:27:56 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,7 @@ int		bad_sep(char *str);
 int		bad_redi(char *str);
 int		bad_redi_form(char *str);
 int		print_bad_redi(void);
+
+int		bad_aggr(char *str);
+int		bad_aggr_form(char *str, int i);
 #endif
