@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:05:22 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:56:26 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/18 13:05:49 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,17 @@ char	**init_cmd(char **command)
 	size = 0;
 	i = 0;
 	cmd = NULL;
-	while (command[i] && !ft_iscmdsep(command[i]) && !ft_isredi(command[i]))
+	while (command[i] && !ft_iscmdsep(command[i]))
 		i++;
 	cmd = (char **)malloc(sizeof(char *) * (i + 1));
 	i = 0;
-	while (command[size + i] && !ft_iscmdsep(command[size + i])
-		&& !ft_isredi(command[size + i]))
+	while (command[size + i] && !ft_iscmdsep(command[size + i]))
 	{
-		if (ft_isaggr(command[size + i]))
+		if (ft_isredi(command[size + i]))
+			i = i + 2;
+		else if (ft_isaggr(command[size + i]))
 			i++;
-		if (command[size + i] && !ft_iscmdsep(command[size + i])
-			&& !ft_isredi(command[size + i]))
+		else if (command[size + i] && !ft_iscmdsep(command[size + i]))
 		{
 			cmd[size] = ft_strdup(command[size + i]);
 			size++;

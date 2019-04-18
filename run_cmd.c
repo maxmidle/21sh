@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:22:36 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:55:51 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/18 16:46:55 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 		i = ft_tablen(comd->cmd);
 	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i])
 		&& ft_strcmp(comd->cmd[i], "exit"))
-		envorig = run_builtins(comd->cmd, envorig);
-	else if (comd->cmd[i] && !run_bin(&comd->cmd[i], envorig, envexec))
+		envorig = run_builtins(comd, envorig);
+	else if (comd->cmd[i] && !run_bin(comd, envorig, envexec))
 	{
 		if (ft_strcmp(comd->cmd[i], "exit"))
 		{
@@ -37,27 +37,54 @@ char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 	return (exit_runcmd(envorig, 0));
 }
 
-char	**run_builtins(char **command, char **envorig)
+char	**run_builtins(t_cmd *comd, char **envorig)
 {
-	if (!ft_strcmp(command[0], "cd"))
-		ft_cd(command, envorig);
-	else if (!ft_strcmp(command[0], "echo"))
-		ft_echo(command);
-	else if (!ft_strcmp(command[0], "setenv"))
+	if (!ft_strcmp(comd->cmd[0], "cd"))
+		ft_cd(comd->cmd, envorig);
+	else if (!ft_strcmp(comd->cmd[0], "echo"))
+		ft_echo(comd->cmd);
+	else if (!ft_strcmp(comd->cmd[0], "setenv"))
 	{
-		if (!command[1] || !ft_strchr(command[1], '='))
-			write(2, "usage: setenv [VAR=value]\n", 26);
+		if (!comd->cmd[1] || !ft_strchr(comd->cmd[1], '='))
+			builtin_error(comd, 1);
 		else
-			envorig = ft_setenv(envorig, command[1]);
+		{
+			envorig = ft_setenv(envorig, comd->cmd[1]);
+			builtin_error(comd, 3);
+		}
 	}
-	else if (!ft_strcmp(command[0], "unsetenv"))
+	else if (!ft_strcmp(comd->cmd[0], "unsetenv"))
 	{
-		if (command[1])
-			envorig = ft_unsetenv(envorig, command[1]);
+		if (comd->cmd[1])
+		{
+			envorig = ft_unsetenv(envorig, comd->cmd[1]);
+			builtin_error(comd, 3);
+		}
 		else
-			write(2, "usage: unsetenv [VAR]\n", 22);
+			builtin_error(comd, 2);
 	}
 	return (envorig);
+}
+
+void	builtin_error(t_cmd *comd, int mode)
+{
+	if (mode == 1)
+	{
+		write(2, "usage: setenv [VAR=value]\n", 26);
+		if (!comd->next)
+			ft_putstr("\x1b[31m");
+	}
+	else if (mode == 2)
+	{
+		write(2, "usage: unsetenv [VAR]\n", 22);
+		if (!comd->next)
+			ft_putstr("\x1b[31m");
+	}
+	else if (mode == 3)
+	{
+		if (!comd->next)
+			ft_putstr("\x1b[32m");
+	}
 }
 
 char	**exit_runcmd(char **envorig, int mode)

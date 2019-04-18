@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   sh.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/30 18:14:34 by radler            #+#    #+#             */
-/*   Updated: 2019/04/16 10:42:56 by radler           ###   ########.fr       */
+/*   Created: 2019/04/18 13:06:10 by radler            #+#    #+#             */
+/*   Updated: 2019/04/18 16:52:31 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,15 @@ int		ft_prompt(char **envorig)
 int		sig_init(void)
 {
 	if (!isatty(0) || !isatty(1) || !isatty(2))
+	{
+		write(2, "-21sh: redirection error: ", 26);
+		write(2, "this shell must be run on :\n\t", 29);
+		write(2, "- FD_IN = 0\n\t- FD_OUT = 1\n\t- FD_ERR = 2\n", 4);
 		return (0);
+	}
 	signal(SIGINT, sighandler);
+	signal(SIGTSTP, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	return (1);
 }
 
@@ -90,6 +97,7 @@ void	print_line_sep(void)
 		i--;
 	}
 	ft_putchar('\n');
+	ft_putstr("\x1b[0m");
 }
 
 void	sighandler(int sig)

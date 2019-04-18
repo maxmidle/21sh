@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/04 10:43:43 by radler            #+#    #+#             */
-/*   Updated: 2019/04/11 17:20:41 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/18 12:50:36 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_line			*tc_handlechar(t_line *line, char buff[7])
 			tabsize--;
 		}
 	}
-	else
+	else if (buff[0] > 31)
 		line = tc_putchar(line, buff);
 	return (line);
 }

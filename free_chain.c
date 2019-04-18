@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/09 17:20:41 by radler            #+#    #+#             */
-/*   Updated: 2019/04/16 14:24:03 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/18 09:52:11 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,11 @@ void	free_chain(t_cmd *comd)
 		list = list->prev;
 	while (list)
 	{
-		ft_strdel(&list->aggreg);
 		if (list->cmd)
 			ft_freetab(list->cmd);
-		if (list->fd_in != 0 && list->fd_in > 2)
-			close(list->fd_in);
-		if (list->fd_out != 1 && list->fd_in > 2)
-			close(list->fd_out);
 		if (list->file_in)
 			ft_strdel(&list->file_in);
+		ft_strdel(&list->aggreg);
 		close_chain(list);
 		list->prev = NULL;
 		list = list->next;
@@ -42,9 +38,13 @@ void	free_chain(t_cmd *comd)
 
 void	close_chain(t_cmd *comd)
 {
-	t_cmd *list;
+	t_cmd	*list;
 
 	list = comd;
+	if (list->fd_in != 0 && list->fd_in > 2)
+		close(list->fd_in);
+	if (list->fd_out != 1 && list->fd_in > 2)
+		close(list->fd_out);
 	if (list->file_out)
 	{
 		ft_freetab(list->file_out);

@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/04/17 15:02:44 by radler            #+#    #+#             */
-/*   Updated: 2019/04/17 15:51:43 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/18 09:54:43 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int		bad_aggr_form(char *str, int i)
 		return (0);
 	if (nbr < 0 || nbr > 2)
 	{
-		write(2, "-21sh: syntax error:\n\tunexpected file descriptor : '", 52);
+		write(2, "-21sh: syntax error:\n\tunexpected file descriptor : ", 51);
 		write(2, tmp, ft_strlen(tmp));
-		write(2, "'\n", 2);
+		write(2, "\n", 1);
 		ft_strdel(&tmp);
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/17 15:27:56 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/18 16:33:52 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # include "termcap/termcap.h"
 # include "sh_struct.h"
 
-int		run_bin(char **command, char **envorig, char **envexec);
-int		exec_bin(char *cmd, char **command, char **envexec);
+int		run_bin(t_cmd *comd, char **envorig, char **envexec);
+int		exec_bin(char *cmd, t_cmd *comd, char **envexec);
 
 char	**read_line(char **environ, char ***history, int promptsize);
 char	**split_line(char *str);
@@ -63,8 +63,9 @@ char	*dollar_verif(char *command, char **environ);
 char	*dollar_fill(char *command, char *environ);
 
 char	**run_cmd(t_cmd *comd, char **envorig, char **envexec);
-char	**run_builtins(char **command, char **envorig);
+char	**run_builtins(t_cmd *comd, char **envorig);
 char	**exit_runcmd(char **envorig, int mode);
+void	builtin_error(t_cmd *comd, int mode);
 int		ft_isbuiltins(char *command);
 
 t_cmd	*handle_line(char **command);
