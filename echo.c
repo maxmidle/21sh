@@ -12,20 +12,22 @@
 
 #include "sh.h"
 
-void	ft_echo(char **command)
+void	ft_echo(t_cmd *comd)
 {
 	int	i;
 
 	i = 1;
-	if (command[1] && !ft_strcmp(command[1], "-n"))
+	if (comd->cmd[1] && !ft_strcmp(comd->cmd[1], "-n"))
 		i++;
-	while (command && command[i])
+	while (comd->cmd && comd->cmd[i])
 	{
-		ft_putstr(command[i]);
-		if (command[i + 1])
+		ft_putstr(comd->cmd[i]);
+		if (comd->cmd[i + 1])
 			ft_putchar(' ');
 		i++;
 	}
-	if (!command[1] || ft_strcmp(command[1], "-n"))
+	if (!comd->cmd[1] || ft_strcmp(comd->cmd[1], "-n"))
 		ft_putchar('\n');
+	if (!comd->next)
+		ft_putstr("\x1b[32m");
 }

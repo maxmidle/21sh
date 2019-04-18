@@ -19,9 +19,9 @@ int		main(void)
 	char		**history;
 	t_cmd		*comd;
 
-	if (!sig_init())
-		return (0);
 	envorig = ft_tabdup(environ);
+	if (!(envorig = sig_init(envorig)))
+		return (0);
 	history = NULL;
 	while (envorig)
 	{
@@ -64,21 +64,6 @@ int		ft_prompt(char **envorig)
 	}
 }
 
-int		sig_init(void)
-{
-	if (!isatty(0) || !isatty(1) || !isatty(2))
-	{
-		write(2, "-21sh: redirection error: ", 26);
-		write(2, "this shell must be run on :\n\t", 29);
-		write(2, "- FD_IN = 0\n\t- FD_OUT = 1\n\t- FD_ERR = 2\n", 4);
-		return (0);
-	}
-	signal(SIGINT, sighandler);
-	signal(SIGTSTP, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-	return (1);
-}
-
 void	print_line_sep(void)
 {
 	char	*term;
@@ -98,9 +83,4 @@ void	print_line_sep(void)
 	}
 	ft_putchar('\n');
 	ft_putstr("\x1b[0m");
-}
-
-void	sighandler(int sig)
-{
-	sig++;
 }

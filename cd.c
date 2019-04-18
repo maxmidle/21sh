@@ -12,15 +12,15 @@
 
 #include "sh.h"
 
-void	ft_cd(char **command, char **envorig)
+void	ft_cd(t_cmd *comd, char **envorig)
 {
 	struct stat	sb;
 	char		*path;
 	char		oldpwd[2048];
 
 	getcwd(oldpwd, 2048);
-	if (command[1])
-		path = getpath(command[1], oldpwd, envorig);
+	if (comd->cmd[1])
+		path = getpath(comd->cmd[1], oldpwd, envorig);
 	else
 		path = tilde(ft_strdup("~"), envorig);
 	if (!stat(path, &sb))
@@ -29,14 +29,14 @@ void	ft_cd(char **command, char **envorig)
 		{
 			if (!chdir(path))
 				change_pwd(envorig, oldpwd);
-			else if (command[1])
-				cd_error(1, command[1]);
+			else if (comd->cmd[1])
+				cd_error(1, comd);
 		}
-		else if (command[1])
-			cd_error(2, command[1]);
+		else if (comd->cmd[1])
+			cd_error(2, comd);
 	}
-	else if (command[1])
-		cd_error(3, command[1]);
+	else if (comd->cmd[1])
+		cd_error(3, comd);
 	ft_strdel(&path);
 }
 
@@ -65,13 +65,13 @@ char	*getpath(char *command, char *oldpwd, char **envorig)
 	return (path);
 }
 
-void	cd_error(int mode, char *command)
+void	cd_error(int mode, t_cmd *comd)
 {
 	int error;
 
 	error = errno;
 	write(2, "-21sh: cd: ", 11);
-	write(2, command, ft_strlen(command));
+	write(2, comd->cmd[1], ft_strlen(comd->cmd[1]));
 	if (error == ELOOP)
 		write(2, ": Too many levels of symbolic links\n", 36);
 	else if (mode == 1)
@@ -80,6 +80,8 @@ void	cd_error(int mode, char *command)
 		write(2, ": Not a directory\n", 18);
 	else if (mode == 3)
 		write(2, ": No such file or directory\n", 28);
+	ft_putstr("\x1b[31m");
+	
 }
 
 void	change_pwd(char **envorig, char *oldpwd)
@@ -106,4 +108,5 @@ void	change_pwd(char **envorig, char *oldpwd)
 		envorig[y] = ft_strdup("PWD=");
 		ft_strconc(&envorig[y], getcwd(buff, 2048));
 	}
+	ft_putstr("\x1b[32m");
 }

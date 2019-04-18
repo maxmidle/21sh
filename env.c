@@ -34,6 +34,7 @@ char	**env(char **command, char **envorig, char **envexec)
 	}
 	if (!command[i])
 		ft_print_words_tables(envexec);
+	env_rederror(command[i]);
 	if (command[i] && !ft_strcmp(command[i], "env"))
 		return (env(&command[i], envorig, envexec));
 	else

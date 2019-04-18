@@ -58,6 +58,7 @@ int		bad_sep(char *str)
 			write(2, "-21sh: syntax error:\n\ttoken requiered before \'", 46);
 			write(2, &str[i], 1);
 			write(2, "\'\n", 2);
+			ft_putstr("\x1b[31m");
 			return (1);
 		}
 		if (str[i])
@@ -99,6 +100,7 @@ int		print_bad_redi(void)
 {
 	write(2, "-21sh: syntax error:\n\t", 22);
 	write(2, "token requiered after redirection\n", 34);
+	ft_putstr("\x1b[31m");
 	return (1);
 }
 
@@ -119,6 +121,7 @@ int		bad_redi_form(char *str)
 					write(2, "unexpected redirection \'", 24);
 					write(2, &str[i], 3);
 					write(2, "\'\n", 2);
+					ft_putstr("\x1b[31m");
 					return (1);
 				}
 			}

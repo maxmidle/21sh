@@ -19,7 +19,10 @@ char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 	if (!comd->cmd)
 		return (exit_runcmd(envorig, 0));
 	if ((i = env_verif(comd->cmd, 0)) == -1)
+	{
 		i = ft_tablen(comd->cmd);
+		ft_putstr("\x1b[31m");
+	}
 	if (comd->cmd[i] && ft_isbuiltins(comd->cmd[i])
 		&& ft_strcmp(comd->cmd[i], "exit"))
 		envorig = run_builtins(comd, envorig);
@@ -40,9 +43,9 @@ char	**run_cmd(t_cmd *comd, char **envorig, char **envexec)
 char	**run_builtins(t_cmd *comd, char **envorig)
 {
 	if (!ft_strcmp(comd->cmd[0], "cd"))
-		ft_cd(comd->cmd, envorig);
+		ft_cd(comd, envorig);
 	else if (!ft_strcmp(comd->cmd[0], "echo"))
-		ft_echo(comd->cmd);
+		ft_echo(comd);
 	else if (!ft_strcmp(comd->cmd[0], "setenv"))
 	{
 		if (!comd->cmd[1] || !ft_strchr(comd->cmd[1], '='))

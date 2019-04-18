@@ -45,18 +45,21 @@ int		env_verif(char **command, int mode);
 int		env_param_error(char **cmd, int i);
 int		env_error_print(char **cmd, int i, int mode);
 int		env_search(char **environ, char *var);
+void	env_rederror(char *command);
 
-void	ft_cd(char **command, char **envorig);
-void	cd_error(int mode, char *command);
+void	ft_cd(t_cmd *comd, char **envorig);
+void	cd_error(int mode, t_cmd *comd);
 void	change_pwd(char **envorig, char *oldpwd);
 char	*getpath(char *command, char *oldpwd, char **envorig);
 
-void	ft_echo(char **command);
+void	ft_echo(t_cmd *comd);
 
 int		ft_prompt(char **envorig);
 void	print_line_sep(void);
+
+char		**sig_init(char **envorig);
+char		**shlvl_up(char **envorig);
 void	sighandler(int sig);
-int		sig_init(void);
 
 char	**dollar(char **command, char **environ);
 char	*dollar_verif(char *command, char **environ);

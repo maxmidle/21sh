@@ -13,7 +13,8 @@ TERMOBJS = tc_readline.o tc_copypaste.o tc_stop.o tc_write.o tc_endhome.o \
 
 SRCS = sh.c run_bin.c read_line.c tilde.c env.c env_verif.c cd.c echo.c \
 	dollar.c run_cmd.c handle_line.c chain_list.c chain_list2.c ft_is.c \
-	run_proc_cmd.c file_fun.c quote.c free_chain.c syntax.c aggr_error.c
+	run_proc_cmd.c file_fun.c quote.c free_chain.c syntax.c aggr_error.c \
+	signal.c
 
 OBJS = $(SRCS:.c=.o) $(TERMOBJS)
 
@@ -21,7 +22,7 @@ LIB = -L libft -lft
 
 all: $(NAME)
 
-$(NAME): $(SRCS) $(TERMCAP)
+$(NAME): $(SRCS) $(TERMCAP) $(INCLUDE)
 	@make -C libft
 	@gcc $(FLAG) -c $(SRCS) $(TERMCAP)
 	@gcc $(FLAG) -o $(NAME) $(OBJS) $(LIB) -l termcap

@@ -91,3 +91,9 @@ int	env_search(char **environ, char *var)
 	else
 		return (-1);
 }
+
+void	env_rederror(char *command)
+{
+	if (!command)
+		ft_putstr("\x1b[32m");
+}

@@ -20,6 +20,7 @@ char	**run_full_cmd(t_cmd *comd, char **envorig)
 	list = comd;
 	while (list && envorig)
 	{
+		ft_putstr("\x1b[0m");
 		envexec = get_envexec(list, envorig);
 		if (ft_isbuiltins(list->cmd[0]) != 2)
 		{
