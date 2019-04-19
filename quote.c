@@ -93,6 +93,7 @@ int		bad_quoting(char *str)
 				write(2, "space requiered before ", 24);
 				write(2, &str[i], 1);
 				write(2, "\n", 1);
+				ft_putstr("\x1b[31m");
 				return (1);
 			}
 			i++;
