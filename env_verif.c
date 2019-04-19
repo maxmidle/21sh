@@ -6,13 +6,13 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:21:03 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:54:46 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/19 09:11:15 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int	env_verif(char **cmd, int mode)
+int		env_verif(char **cmd, int mode)
 {
 	int i;
 	int stop;
@@ -40,7 +40,7 @@ int	env_verif(char **cmd, int mode)
 	return (i);
 }
 
-int	env_param_error(char **cmd, int i)
+int		env_param_error(char **cmd, int i)
 {
 	int y;
 
@@ -57,7 +57,7 @@ int	env_param_error(char **cmd, int i)
 	return (0);
 }
 
-int	env_error_print(char **cmd, int i, int mode)
+int		env_error_print(char **cmd, int i, int mode)
 {
 	int y;
 
@@ -79,7 +79,7 @@ int	env_error_print(char **cmd, int i, int mode)
 	return (-1);
 }
 
-int	env_search(char **environ, char *var)
+int		env_search(char **environ, char *var)
 {
 	int i;
 

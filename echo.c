@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:17:08 by radler            #+#    #+#             */
-/*   Updated: 2019/04/10 09:55:11 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/19 09:52:51 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,8 @@ void	ft_echo(t_cmd *comd)
 	if (!comd->cmd[1] || ft_strcmp(comd->cmd[1], "-n"))
 		ft_putchar('\n');
 	if (!comd->next)
+	{
+		dup2(comd->save_in, 1);
 		ft_putstr("\x1b[32m");
+	}
 }

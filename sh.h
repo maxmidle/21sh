@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:24:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/18 16:33:52 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/19 09:10:28 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	ft_echo(t_cmd *comd);
 int		ft_prompt(char **envorig);
 void	print_line_sep(void);
 
-char		**sig_init(char **envorig);
-char		**shlvl_up(char **envorig);
+char	**sig_init(char **envorig);
+char	**shlvl_up(char **envorig);
 void	sighandler(int sig);
 
 char	**dollar(char **command, char **environ);

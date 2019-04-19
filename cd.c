@@ -6,7 +6,7 @@
 /*   By: radler <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/30 18:18:53 by radler            #+#    #+#             */
-/*   Updated: 2019/04/18 16:51:29 by radler           ###   ########.fr       */
+/*   Updated: 2019/04/19 09:12:36 by radler           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ void	cd_error(int mode, t_cmd *comd)
 	else if (mode == 3)
 		write(2, ": No such file or directory\n", 28);
 	ft_putstr("\x1b[31m");
-	
 }
 
 void	change_pwd(char **envorig, char *oldpwd)
